@@ -1,0 +1,33 @@
+{
+    "name": "colormovestacc",
+    "version": "1.0.0",
+    "description": "The containerized version of the colormoes app for use in the TACC Sciviscolor Portal",
+    "main": "server.js",
+    "directories": {
+        "lib": "lib"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/TACC/colormovestacc.git"
+    },
+    "keywords": [
+        "colormoves",
+        "sciviscolor",
+        "TACC"
+    ],
+    "author": "Ethan Stam",
+    "contributors": [
+        "Sebastian Klassen, Greg Abram, John Gentle"
+    ],
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/TACC/colormovestacc/issues"
+    },
+    "homepage": "https://github.com/TACC/colormovestacc#readme",
+    "dependencies": {
+        "express": "^4.17.3"
+    }
+}
