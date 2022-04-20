@@ -7,6 +7,7 @@ const serveStatic = require('serve-static');
 // Declare Constants
 const PORT = 8888;
 const HOST = '0.0.0.0';
+const APP_ROUTE = '/colormoves/app';
 
 // Define App
 const app = express();
@@ -16,7 +17,7 @@ app.use(serveStatic(path.join(__dirname, '.')));
 app.use(serveStatic(path.join(__dirname, 'lib')));
 
 // App Route Responses.
-app.get('/colormoves', (req, res) => {
+app.get(`${APP_ROUTE}`, (req, res) => {
     res.sendFile(path.join(__dirname, '/index.html'));
 });
 
@@ -24,4 +25,4 @@ app.get('/colormoves', (req, res) => {
 app.listen(PORT, HOST);
 
 // Logging.
-// console.log(`Running on http://${HOST}:${PORT}`
+console.log(`Running on http://${HOST}:${PORT}/${APP_ROUTE}`);
