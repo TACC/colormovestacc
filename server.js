@@ -17,7 +17,7 @@ app.use(serveStatic(path.join(__dirname, '.')));
 app.use(serveStatic(path.join(__dirname, 'lib')));
 
 // App Route Responses.
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
     // Permanent redirect to the app route.
     res.redirect(301, '${APP_ROUTE}');
 });

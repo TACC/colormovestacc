@@ -32,11 +32,11 @@ docker build -t taccwma/colormovestacc:latest .
 docker run -p 8888:8888 sciviscolor/colormoves
 ```
 
-Access the app from the browser using one of these URLs:
+Access the app from the browser at the /colormoves endpoint:
 
-- localhost:8888
-- 0.0.0.0:8888
-- IP_ADDRESS:8888
+- localhost:8888/colormoves
+- 0.0.0.0:8888/colormoves
+- IP_ADDRESS:8888/colormoves
 
 ## Using Colormoves
 
