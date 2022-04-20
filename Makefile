@@ -17,8 +17,7 @@ publish:
 
 .PHONY: publish-latest
 publish-latest:
-	docker tag $(DOCKER_IMAGE)
-	docker tag $(DOCKER_IMAGE_LATEST)
+	docker tag $(DOCKER_IMAGE) $(DOCKER_IMAGE_LATEST)
 	docker push $(DOCKER_IMAGE_LATEST)
 
 .PHONY: start
