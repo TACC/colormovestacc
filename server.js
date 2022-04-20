@@ -19,10 +19,12 @@ app.use(serveStatic(path.join(__dirname, 'lib')));
 // App Route Responses.
 app.get('*', (req, res) => {
     // Permanent redirect to the app route.
+    console.log('... Redirecting to /colormoves endpoint.');
     res.redirect(301, '${APP_ROUTE}');
 });
 
 app.get(`${APP_ROUTE}`, (req, res) => {
+    console.log('... Returning /colormoves endpoint.');
     res.sendFile(path.join(__dirname, '/index.html'));
 });
 
