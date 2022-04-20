@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.8'
 services:
   colormoves:
     build:
@@ -11,7 +11,7 @@ services:
       - 8888:8888
     stdin_open: true
     tty: true
-    command: ["node", "server.js"]
+    command: ['node', 'server.js']
     container_name: colormoves
     hostname: colormoves
     restart: always
