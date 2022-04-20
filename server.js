@@ -7,26 +7,16 @@ const serveStatic = require('serve-static');
 // Declare Constants
 const PORT = 8888;
 const HOST = '0.0.0.0';
-const APP_ROUTE = '/colormoves';
+const APP_ROUTE = '/';
 
 // Define App
 const app = express();
 
-// Static Files.
+// Serve Static File Dirs.
 app.use(serveStatic(path.join(__dirname, '.')));
 app.use(serveStatic(path.join(__dirname, 'lib')));
 
 // App Route Responses.
-app.get('*', (req, res) => {
-    // Permanent redirect to the app route.
-    res.sendStatus(301).redirect('/');
-});
-
-app.get('/', (req, res) => {
-    // Permanent redirect to the app route.
-    res.sendStatus(301).redirect(APP_ROUTE);
-});
-
 app.get(APP_ROUTE, (req, res) => {
     res.sendStatus(200).sendFile(path.join(__dirname, '/index.html'));
 });
