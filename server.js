@@ -16,7 +16,7 @@ app.use(serveStatic(path.join(__dirname, '.')));
 app.use(serveStatic(path.join(__dirname, 'lib')));
 
 // App Route Responses.
-app.get('/', (req, res) => {
+app.get('/colormoves', (req, res) => {
     res.sendFile(path.join(__dirname, '/index.html'));
 });
 
@@ -24,4 +24,4 @@ app.get('/', (req, res) => {
 app.listen(PORT, HOST);
 
 // Logging.
-// console.log(`Running on http://${HOST}:${PORT}`);
+// console.log(`Running on http://${HOST}:${PORT}`
