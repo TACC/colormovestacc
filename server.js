@@ -18,7 +18,7 @@ app.use(serveStatic(path.join(__dirname, 'lib')));
 
 // App Route Responses.
 app.get(APP_ROUTE, (req, res) => {
-    res.sendStatus(200).sendFile(path.join(__dirname, '/index.html'));
+    res.sendFile(path.join(__dirname, '/index.html'));
 });
 
 // Start App.
