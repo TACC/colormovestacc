@@ -32,8 +32,36 @@ docker build -t taccwma/colormovestacc:latest .
 docker run -p 8888:8888 sciviscolor/colormoves
 ```
 
-Access the app from the browser at the /colormoves endpoint:
+**C. Using Make**
 
+_Make sure you have make installed locally: https://www.gnu.org/software/make/._
+
+```
+# Build an image.
+make build
+
+# Build a tagged image.
+make build-full
+
+# Start the docker container.
+make start
+# CTRL-C to stop.
+
+# Stop the running containers and remove them.
+make stop
+
+# Publish the current tagged image.
+make publish
+
+# Publish the current latest image:
+make publish-latest
+```
+
+Access the app from the browser at the `/` or `/colormoves` endpoint:
+
+- localhost:8888/
+- 0.0.0.0:8888/
+- IP_ADDRESS:8888/
 - localhost:8888/colormoves
 - 0.0.0.0:8888/colormoves
 - IP_ADDRESS:8888/colormoves

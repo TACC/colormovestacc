@@ -1,1 +1,12 @@
+# ignore intellij IDE things
+.idea/
+
+# OsX DS_Store nonsense
+.DS_Store
+nohup.out
+
+# Node cruft.
 node_modules/
+
+# Docker build files.
+docker_repo.var
