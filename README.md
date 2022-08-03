@@ -50,6 +50,8 @@ make start
 # Stop the running containers and remove them.
 make stop
 
+# NOTE: Publish requires access to the taccwma dockerhub repo.
+
 # Publish the current tagged image.
 make publish
 

@@ -1,7 +1,19 @@
-DOCKERHUB_REPO := taccwma/colormovestacc
+DOCKERHUB_REPO := $(shell cat ./docker_repo.var)
 DOCKER_TAG ?= $(shell git rev-parse --short HEAD)
 DOCKER_IMAGE := $(DOCKERHUB_REPO):$(DOCKER_TAG)
 DOCKER_IMAGE_LATEST := $(DOCKERHUB_REPO):latest
+
+####
+# `DOCKER_IMAGE_BRANCH` tag is the git tag for the commit if it exists, else the branch on which the commit exists
+DOCKER_IMAGE_BRANCH := $(DOCKERHUB_REPO):$(shell git describe --exact-match --tags 2> /dev/null || git symbolic-ref --short HEAD)
+
+.PHONY: info
+info:
+	@echo $(DOCKERHUB_REPO)
+	@echo $(DOCKER_TAG)
+	@echo $(DOCKER_IMAGE)
+	@echo $(DOCKER_IMAGE_LATEST)
+	@echo $(DOCKER_IMAGE_BRANCH)
 
 .PHONY: build
 build:
@@ -27,7 +39,3 @@ start:
 .PHONY: stop
 stop:
 	docker-compose -f docker-compose.yml down
-
-.PHONY: stop-verbose
-stop-v:
-	docker-compose -f docker-compose.yml down -v
