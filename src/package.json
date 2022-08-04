@@ -28,6 +28,7 @@
     },
     "homepage": "https://github.com/TACC/colormovestacc#readme",
     "dependencies": {
-        "express": "^4.17.3"
+        "express": "^4.17.3",
+        "log4js": "^6.6.1"
     }
 }
