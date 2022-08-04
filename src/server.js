@@ -25,11 +25,7 @@ app.get(APP_ROUTE, (req, res) => {
 app.listen(PORT, HOST);
 
 // Logging.
-// console.log(`Running on http://${HOST}:${PORT}${APP_ROUTE}`);
-
-// Better logging.
 var log4js = require('log4js');
 var logger = log4js.getLogger();
 logger.level = 'debug'; // default level is OFF - which means no logs at all.
-logger.debug('Test MSG: log4js working.');
 logger.debug(`Running on http://${HOST}:${PORT}${APP_ROUTE}`);
