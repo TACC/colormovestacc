@@ -4,4 +4,4 @@ WORKDIR /colormoves
 COPY ./src .
 RUN npm install
 EXPOSE 8888
-ENTRYPOINT ["node", "server.js"]
+ENTRYPOINT ["node", "./src/server.js"]
