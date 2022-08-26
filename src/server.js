@@ -7,7 +7,8 @@ const serveStatic = require('serve-static');
 // Declare Constants
 const PORT = 8888;
 const HOST = '0.0.0.0';
-const APP_ROUTE = '/colormoves';
+// const APP_ROUTE = '/colormoves';
+const APP_ROUTE = '/';
 
 // Define App
 const app = express();
