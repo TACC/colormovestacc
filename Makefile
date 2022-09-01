@@ -8,15 +8,17 @@ DOCKER_IMAGE_BRANCH := $(DOCKERHUB_REPO):$(shell git describe --exact-match --ta
 # `DOCKER_IMAGE_BRANCH` tag is the git tag for the commit if it exists,
 # else the branch on which the commit exists.
 
-
+# Build the colormoves app image from source using docker compose.
 .PHONY: build
 build:
 	docker-compose -f $(DOCKER_COMPOSE_PATH) build
 
+# Build the colormoves app image from source using docker engine.
 .PHONY: build-full
 build-full:
 	docker build -t $(DOCKER_IMAGE) -f ./Dockerfile .
 
+# Display information about the current env vars used by Make.
 .PHONY: info
 info:
 	@echo $(DOCKERHUB_REPO)
@@ -25,27 +27,43 @@ info:
 	@echo $(DOCKER_IMAGE_LATEST)
 	@echo $(DOCKER_IMAGE_BRANCH)
 
+# Publish the current image tag to docker hub.
 .PHONY: publish
 publish:
 	docker push $(DOCKER_IMAGE)
 
+# Tag and publish latest image to docker hub.
 .PHONY: publish-latest
-publish-latest:
-	docker tag $(DOCKER_IMAGE) $(DOCKER_IMAGE_LATEST)
+publish-latest: tag-latest-image
 	docker push $(DOCKER_IMAGE_LATEST)
 
+# Display the running container information.
+.PHONY: colormoves-info
+colormoves-info:
+	docker ps -a
+	docker inspect colormoves
+
+# Run the colormoves app if using docker-compose.
 .PHONY: start
 start:
 	docker-compose -f $(DOCKER_COMPOSE_PATH) up &
 
+# Run the colormoves app if using the image file.
+.PHONY: start-latest-image
+start-latest-image:
+	docker run --name colormoves -p 8888:8888 taccwma/colormovestacc:latest &
+
+# Stop the colormoves app if using docker-compose.
 .PHONY: stop
 stop:
 	docker-compose -f $(DOCKER_COMPOSE_PATH) down
 
-.PHONY: start-latest
-run-published-latest:
-	docker run --name colormoves -p 8888:8888 sciviscolor/colormoves:latest &
-
-.PHONY: stop-latest
-stop-latest:
+# Stop the colormoves app if using the image file.
+.PHONY: stop-latest-image
+stop-latest-image:
 	docker kill colormoves
+
+# Tag the latest colormoves app  image file.
+.PHONY: tag-latest-image
+tag-latest-image:
+	docker tag $(DOCKER_IMAGE) $(DOCKER_IMAGE_LATEST)
