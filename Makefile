@@ -18,39 +18,29 @@ build:
 build-full:
 	docker build -t $(DOCKER_IMAGE) -f ./Dockerfile .
 
-# Display information about the current env vars used by Make.
-.PHONY: info
-info:
-	@echo $(DOCKERHUB_REPO)
-	@echo $(DOCKER_TAG)
-	@echo $(DOCKER_IMAGE)
-	@echo $(DOCKER_IMAGE_LATEST)
-	@echo $(DOCKER_IMAGE_BRANCH)
-
-# Publish the current image tag to docker hub.
-.PHONY: publish
-publish:
-	docker push $(DOCKER_IMAGE)
+# Tag the latest colormoves app  image file.
+.PHONY: tag-latest-image
+tag-latest-image:
+	docker tag $(DOCKER_IMAGE) $(DOCKER_IMAGE_LATEST)
 
 # Tag and publish latest image to docker hub.
 .PHONY: publish-latest
 publish-latest: tag-latest-image
 	docker push $(DOCKER_IMAGE_LATEST)
 
-# Display the running container information.
-.PHONY: colormoves-info
-colormoves-info:
-	docker ps -a
-	docker inspect colormoves
+# Publish the current image tag to docker hub.
+.PHONY: publish
+publish: publish-latest
+	docker push $(DOCKER_IMAGE)
 
 # Run the colormoves app if using docker-compose.
 .PHONY: start
 start:
 	docker-compose -f $(DOCKER_COMPOSE_PATH) up &
 
-# Run the colormoves app if using the image file.
-.PHONY: start-latest-image
-start-latest-image:
+# Run the colormoves app if using the latest image file.
+.PHONY: start-image
+start-image:
 	docker run --name colormoves -p 8888:8888 taccwma/colormovestacc:latest &
 
 # Stop the colormoves app if using docker-compose.
@@ -59,11 +49,26 @@ stop:
 	docker-compose -f $(DOCKER_COMPOSE_PATH) down
 
 # Stop the colormoves app if using the image file.
-.PHONY: stop-latest-image
-stop-latest-image:
+.PHONY: stop-image
+stop-image:
 	docker kill colormoves
 
-# Tag the latest colormoves app  image file.
-.PHONY: tag-latest-image
-tag-latest-image:
-	docker tag $(DOCKER_IMAGE) $(DOCKER_IMAGE_LATEST)
+# Display info about the current setup.
+.PHONY: info
+info: info-make info-colormoves
+	@echo "-- Current Make & Docker Information"
+
+# Display the running container information.
+.PHONY: info-colormoves
+info-colormoves:
+	docker ps -a
+	docker inspect colormoves
+
+# Display information about the current env vars used by Make.
+.PHONY: info-make
+info-make:
+	@echo $(DOCKERHUB_REPO)
+	@echo $(DOCKER_TAG)
+	@echo $(DOCKER_IMAGE)
+	@echo $(DOCKER_IMAGE_LATEST)
+	@echo $(DOCKER_IMAGE_BRANCH)
