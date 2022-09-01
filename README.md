@@ -25,11 +25,19 @@ node server.js
 _Make sure you have docker installed and running: https://www.docker.com/products/docker-desktop/_
 
 ```
-# build the colormovestacc image.
+# Pull and run the latest published image.
+docker run --name colormoves -p 8888:8888 taccwma/colormovestacc:latest
+
+--OR--
+
+# build the colormovestacc image from source.
 docker build -t taccwma/colormovestacc:latest .
 
 # start the docker container.
-docker run -p 8888:8888 sciviscolor/colormoves
+docker run --name colormoves -p 8888:8888 sciviscolor/colormoves:latest
+
+# Stop the locally running container.
+docker kill colormoves
 ```
 
 **C. Using Make**
@@ -58,6 +66,8 @@ make publish
 # Publish the current latest image:
 make publish-latest
 ```
+
+
 
 Access the app from the browser at the `/` or `/colormoves` endpoint:
 

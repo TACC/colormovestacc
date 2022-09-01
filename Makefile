@@ -41,3 +41,11 @@ start:
 .PHONY: stop
 stop:
 	docker-compose -f $(DOCKER_COMPOSE_PATH) down
+
+.PHONY: start-latest
+run-published-latest:
+	docker run --name colormoves -p 8888:8888 sciviscolor/colormoves:latest &
+
+.PHONY: stop-latest
+stop-latest:
+	docker kill colormoves
