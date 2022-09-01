@@ -30,9 +30,6 @@ docker build -t taccwma/colormovestacc:latest .
 
 # start the docker container.
 docker run -p 8888:8888 sciviscolor/colormoves
-
-# using the published image
-docker run -p 8888:8888 taccwma/colormovestacc
 ```
 
 **C. Using Make**
