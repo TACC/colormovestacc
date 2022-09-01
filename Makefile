@@ -34,8 +34,8 @@ publish: publish-latest
 	docker push $(DOCKER_IMAGE)
 
 # Run the colormoves app if using docker-compose.
-.PHONY: start
-start:
+.PHONY: start-compose
+start-compose:
 	docker-compose -f $(DOCKER_COMPOSE_PATH) up &
 
 # Run the colormoves app if using the latest image file.
@@ -43,15 +43,26 @@ start:
 start-image:
 	docker run --name colormoves -p 8888:8888 taccwma/colormovestacc:latest &
 
+# Start the app image as a container.
+.PHONY: start
+start: start-image open-browser
+	@echo "Colormoves is now running..."
+
 # Stop the colormoves app if using docker-compose.
-.PHONY: stop
-stop:
+.PHONY: stop-compose
+stop-compose:
 	docker-compose -f $(DOCKER_COMPOSE_PATH) down
 
 # Stop the colormoves app if using the image file.
 .PHONY: stop-image
 stop-image:
 	docker kill colormoves
+	docker rm colormoves
+
+# Stop the app image as a container.
+.PHONY: stop
+stop: stop-image
+	@echo "Colormoves is shutting down."
 
 # Display info about the current setup.
 .PHONY: info
@@ -72,3 +83,7 @@ info-make:
 	@echo $(DOCKER_IMAGE)
 	@echo $(DOCKER_IMAGE_LATEST)
 	@echo $(DOCKER_IMAGE_BRANCH)
+
+.PHONY: open-browser
+open-browser:
+	open http://0.0.0.0:8888
