@@ -7,7 +7,9 @@ services:
     # image: taccwma/core-cms:latest
     image: ${CMS_IMAGE}:${CMS_TAG}
     volumes:
+      - ./conf/cms/settings_custom.py:/code/taccsite_cms/settings_custom.py
       - ./conf/cms/secrets.py:/code/taccsite_cms/secrets.py
+      - ./conf/cms/settings_local.py:/code/taccsite_cms/settings_local.py
       - ./conf/cms/uwsgi/uwsgi.ini:/code/uwsgi.ini
       - /var/www/portal/cms/static:/code/static
       - /var/www/portal/cms/media:/code/media
@@ -101,7 +103,7 @@ services:
       - core
 
   websockets:
-    image: taccwma/core-portal:local
+    image: ${PORTAL_IMAGE}:${PORTAL_TAG}
     volumes:
       - ../../../.:/srv/www/portal
       - ../nginx/certificates/cep.test.crt:/etc/ssl/cep.test.crt
