@@ -5,8 +5,7 @@ DOCKERHUB_REPO := $(shell cat ./docker_repo.var)
 DOCKER_TAG ?= $(shell git rev-parse --short HEAD)
 DOCKER_IMAGE := $(DOCKERHUB_REPO):$(DOCKER_TAG)
 DOCKER_IMAGE_LATEST := $(DOCKERHUB_REPO):latest
-# The DOCKER_IMAGE_BRANCH tag is the git tag for the commit if it exists,
-# else it is the branch on which the commit exists.
+# DOCKER_IMAGE_BRANCH is the git tag for the commit (if it exists, else it is the branch on which the commit exists).
 DOCKER_IMAGE_BRANCH := $(DOCKERHUB_REPO):$(shell git describe --exact-match --tags 2> /dev/null || git symbolic-ref --short HEAD)
 
 
@@ -91,7 +90,8 @@ start-app: start-image open-browser
 # Start the app.
 .PHONY: start-dev
 start-dev:
-	docker-compose -f docker-compose.fullcms.yml up &
+	docker-compose -f docker-compose.core-w-app.yml --verbose up &
+# docker-compose -f docker-compose.fullcms.yml up &
 
 .PHONY: start-src
 start-src: start open-browser
@@ -116,7 +116,8 @@ stop-app: stop-image
 
 .PHONY: stop-dev
 stop-dev:
-	docker-compose -f docker-compose.fullcms.yml down
+	docker-compose -f docker-compose.core-w-app.yml down
+# docker-compose -f docker-compose.fullcms.yml down
 
 .PHONY: stop-src
 stop-src: stop
