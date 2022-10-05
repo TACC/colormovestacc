@@ -67,14 +67,13 @@ publish: publish-latest
 
 # Tag and publish latest image to docker hub.
 .PHONY: publish-latest
-publish-latest: tag-latest-image
+publish-latest: tag-image
 	docker push $(DOCKER_IMAGE_LATEST)
 
 # Tag the latest colormoves app  image file.
-.PHONY: tag-latest-image
-tag-latest-image:
-	docker tag $(DOCKER_IMAGE)
-	docker tag $(DOCKER_IMAGE_LATEST)
+.PHONY: tag-image
+tag-image:
+	docker tag $(DOCKER_IMAGE) $(DOCKER_IMAGE_LATEST)
 
 
 #############################
