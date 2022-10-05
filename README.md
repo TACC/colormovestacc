@@ -72,11 +72,11 @@ docker kill colormoves
     ~/colormovestacc/> make start-app
 
 -- From the local source code:
-    ~/colormovestacc/> make start-dev
+    ~/colormovestacc/> make start-src
 
 # To stop the running containers and remove them, reverse the start command.
 ~/colormovestacc/> make stop-app
-~/colormovestacc/> make stop-dev
+~/colormovestacc/> make stop-src
 
 # NOTE: Publish requires access to the taccwma dockerhub repo.
 

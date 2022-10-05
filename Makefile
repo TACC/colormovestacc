@@ -89,8 +89,13 @@ start:
 start-app: start-image open-browser
 	@echo "Starting Colormoves using latest image..." &
 
+# Start the app.
 .PHONY: start-dev
-start-dev: start open-browser
+start-dev:
+	docker-compose -f docker-compose.fullcms.yml up &
+
+.PHONY: start-src
+start-src: start open-browser
 	@echo "Starting Colormoves using local source..." &
 
 .PHONY: start-image
@@ -111,7 +116,11 @@ stop-app: stop-image
 	@echo "Colormoves is shutting down."
 
 .PHONY: stop-dev
-stop-dev: stop
+stop-dev:
+	docker-compose -f docker-compose.fullcms.yml down
+
+.PHONY: stop-src
+stop-src: stop
 	@echo "Colormoves is shutting down."
 
 .PHONY: stop-image
