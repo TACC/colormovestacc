@@ -73,7 +73,8 @@ publish-latest: tag-latest-image
 # Tag the latest colormoves app  image file.
 .PHONY: tag-latest-image
 tag-latest-image:
-	docker tag $(DOCKER_IMAGE) $(DOCKER_IMAGE_LATEST)
+	docker tag $(DOCKER_IMAGE)
+	docker tag $(DOCKER_IMAGE_LATEST)
 
 
 #############################

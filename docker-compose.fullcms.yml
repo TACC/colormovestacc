@@ -15,38 +15,38 @@ services:
     depends_on:
       - postgrescms
 
-  # redis:
-  #   image: redis:5.0
-  #   volumes:
-  #     - core_portal_redis_data:/data
-  #   container_name: core_portal_redis
+  redis:
+    image: redis:5.0
+    volumes:
+      - core_portal_redis_data:/data
+    container_name: core_portal_redis
 
-  # rabbitmq:
-  #   image: rabbitmq:3.7.17-management
-  #   volumes:
-  #     - core_portal_rabbitmq_data:/var/lib/rabbitmq/mnesia/rabbit@core_portal_rabbitmq
-  #   env_file: ./conf/rabbitmq/rabbitmq.env
-  #   container_name: core_portal_rabbitmq
+  rabbitmq:
+    image: rabbitmq:3.7.17-management
+    volumes:
+      - core_portal_rabbitmq_data:/var/lib/rabbitmq/mnesia/rabbit@core_portal_rabbitmq
+    env_file: ./conf/rabbitmq/rabbitmq.env
+    container_name: core_portal_rabbitmq
 
-  # memcached:
-  #   image: memcached:latest
-  #   command: ["-m", "1024m"]
-  #   container_name: core_portal_memcached
-  #   restart: always
+  memcached:
+    image: memcached:latest
+    command: ["-m", "1024m"]
+    container_name: core_portal_memcached
+    restart: always
 
-  # elasticsearch:
-  #   image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
-  #   ulimits:
-  #     memlock: -1
-  #   environment:
-  #     - ES_HEAP_SIZE:1g
-  #     - discovery.type=single-node
-  #   volumes:
-  #     - ./conf/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-  #     - core_portal_es_data:/usr/share/elasticsearch/data
-  #   container_name: core_portal_elasticsearch
-  #   ports:
-  #     - 9200:9200
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
+    ulimits:
+      memlock: -1
+    environment:
+      - ES_HEAP_SIZE:1g
+      - discovery.type=single-node
+    volumes:
+      - ./conf/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - core_portal_es_data:/usr/share/elasticsearch/data
+    container_name: core_portal_elasticsearch
+    ports:
+      - 9200:9200
 
   # postgres:
   #   image: postgres:11.5
@@ -75,12 +75,17 @@ services:
     volumes:
       - ./conf/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./conf/nginx/colormoves.location.conf:/etc/nginx/conf.d/colormoves.location.conf
+      # - ./conf/nginx/data.location.conf:/etc/nginx/conf.d/data.location.conf
+      # - ./conf/nginx/assets.location.conf:/etc/nginx/conf.d/assets.location.conf
       - ./conf/uwsgi/uwsgi_params:/etc/nginx/uwsgi_params
       - ./conf/certificates/dhparam.pem:/etc/ssl/dhparam.pem
-      # - ./conf/certificates/cep.test.crt:/etc/ssl/certs/portal.cer
-      # - ./conf/certificates/cep.test.key/:/etc/ssl/private/portal.key
+      - ./conf/certificates/cep.test.crt:/etc/ssl/certs/portal.cer
+      - ./conf/certificates/cep.test.key/:/etc/ssl/private/portal.key
       - /var/www/portal/cms/static:/var/www/portal/cms/static
       - /var/www/portal/cms/media:/var/www/portal/cms/media
+      # - /var/www/portal/portal/media:/var/www/portal/portal/media
+      # - /var/www/portal/portal/static:/var/www/portal/portal/static
+      # - protx_geospatial_data:/protx-data/static
       # - ./protx-client:/var/www/portal/protx-client
       # - protx_app_distribution:/protx-app-distribution
     ports:
@@ -154,9 +159,34 @@ services:
     hostname: colormoves
     restart: always
 
+  # protx_geospatial:
+  #   image: taccwma/protx-geospatial:${PROTX_GEOSPATIAL_TAG}
+  #   pull_policy: always
+  #   environment:
+  #     - POSTGRES_PASSWORD=postgres
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_DB=postgres
+  #   container_name: protx_geospatial
+
+  # protx_setup_client_app_volume:
+  #   image: ${PROTX_DASHBOARD_IMAGE}:${PROTX_DASHBOARD_TAG}
+  #   pull_policy: always
+  #   volumes:
+  #     - protx_app_distribution:/app_dist
+  #   command: cp -rf /app/protx-client/dist/. /app_dist
+
+  # protx_geospatial_setup_volumes:
+  #   image: taccwma/protx-geospatial:${PROTX_GEOSPATIAL_TAG}
+  #   pull_policy: always
+  #   volumes:
+  #     - protx_geospatial_data:/geospatial_data
+  #   command: cp -ru /data/. /geospatial_data
+
 volumes:
-  # core_portal_redis_data:
-  # core_portal_es_data:
-  # core_portal_rabbitmq_data:
+  core_portal_redis_data:
+  core_portal_es_data:
+  core_portal_rabbitmq_data:
   # core_portal_postgres_data:
   core_cms_postgres_data:
+  # protx_geospatial_data:
+  # protx_app_distribution:
