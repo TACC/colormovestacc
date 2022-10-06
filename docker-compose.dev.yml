@@ -1,0 +1,202 @@
+# This compose file is useful for testing https.
+# The .env file sets ENVVARS for the Docker CLI used by this compose file.
+---
+version: "3.8"
+services:
+  cms:
+    image: ${CMS_IMAGE}:${CMS_TAG}
+    volumes:
+      - ./conf/cms/settings_custom.py:/code/taccsite_cms/settings_custom.py
+      - ./conf/cms/secrets.py:/code/taccsite_cms/secrets.py
+      - ./conf/cms/settings_local.py:/code/taccsite_cms/settings_local.py
+      - ./conf/cms/uwsgi/uwsgi.ini:/code/uwsgi.ini
+      - ./conf/cms/static:/code/static
+      - ./conf/cms/media:/code/media
+      - /var/www/portal/cms/static:/code/static
+      - /var/www/portal/cms/media:/code/media
+    # command: python manage.py runserver 0.0.0.0:8000
+    command: ["uwsgi", "--ini", "uwsgi.ini"]
+    container_name: core_cms
+    depends_on:
+      - postgrescms
+    networks:
+      - ${PORTAL_NETWORK_NAME}
+
+  redis:
+    image: ${REDIS_IMAGE}:${REDIS_TAG}
+    volumes:
+      - core_redis_data:/data
+    container_name: core_redis
+    networks:
+      - ${PORTAL_NETWORK_NAME}
+
+  rabbitmq:
+    image: ${RABBITMQ_IMAGE}:${RABBITMQ_TAG}
+    volumes:
+      - core_rabbitmq_data:/var/lib/rabbitmq/mnesia/rabbit@core_rabbitmq
+    env_file: ./conf/env_files/rabbitmq.env
+    container_name: core_rabbitmq
+    networks:
+      - ${PORTAL_NETWORK_NAME}
+
+  memcached:
+    image: ${MEMCACHED_IMAGE}:${MEMCACHED_TAG}
+    container_name: core_memcached
+    networks:
+      - ${PORTAL_NETWORK_NAME}
+
+  elasticsearch:
+    image: ${ELASTICSEARCH_IMAGE}
+    ulimits:
+      memlock: -1
+    environment:
+      - ES_HEAP_SIZE:1g
+      - discovery.type=single-node
+    volumes:
+      - ./conf/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - core_es_data:/usr/share/elasticsearch/data
+    container_name: core_elasticsearch
+    ports:
+      - 9200:9200
+    networks:
+      - ${PORTAL_NETWORK_NAME}
+
+  postgres:
+    image: ${POSTGRES_PORTAL_IMAGE}:${POSTGRES_PORTAL_TAG}
+    volumes:
+      - core_postgres_data:/var/lib/postgresql/data/portal
+    container_name: core_postgres
+    environment:
+      - POSTGRES_PASSWORD=dev
+      - POSTGRES_USER=dev
+      - POSTGRES_DB=dev
+      - PGDATA=/var/lib/postgresql/data/portal
+    networks:
+      - ${PORTAL_NETWORK_NAME}
+
+  postgrescms:
+    image: ${POSTGRES_CMS_IMAGE}:${POSTGRES_CMS_TAG}
+    volumes:
+      - core_cms_postgres_data:/var/lib/postgresql/data/portal
+    container_name: core_cms_postgres
+    environment:
+      - POSTGRES_PASSWORD=taccforever
+      - POSTGRES_USER=postgresadmin
+      - POSTGRES_DB=taccsite
+      - PGDATA=/var/lib/postgresql/data/portal
+    networks:
+      - ${PORTAL_NETWORK_NAME}
+
+  nginx:
+    image: ${NGINX_IMAGE}
+    volumes:
+      - ./conf/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./conf/uwsgi/uwsgi_params:/etc/nginx/uwsgi_params
+      - ./conf/nginx/gzip.conf:/etc/nginx/gzip.conf
+      - ./conf/nginx/certificates/cep.test.crt:/etc/ssl/cep.test.crt
+      - ./conf/nginx/certificates/cep.test.key:/etc/ssl/cep.test.key
+      - ./conf/nginx/dhparam.pem:/etc/ssl/dhparam.pem
+      - /var/www/portal/cms/static:/var/www/portal/cms/static
+      - /var/www/portal/cms/media:/var/www/portal/cms/media
+      - /var/www/portal/portal/media:/var/www/portal/portal/media
+      - /var/www/portal/portal/static:/var/www/portal/portal/static
+      - ./conf/nginx/colormoves.location.conf:/etc/nginx/conf.d/colormoves.location.conf
+      - ./conf/nginx/assets.location.conf:/etc/nginx/conf.d/assets.location.conf
+      # - colormoves_app_distribution:/colormoves-app-distribution
+    ports:
+      - 80:80
+      - 443:443
+    container_name: core_nginx
+    depends_on:
+      - cms
+      - portal
+    networks:
+      - ${PORTAL_NETWORK_NAME}
+
+  websockets:
+    image: ${WEBSOCKETS_IMAGE}:${WEBSOCKETS_TAG}
+    volumes:
+      - ./conf/nginx/certificates/cep.test.crt:/etc/ssl/cep.test.crt
+      - ./conf/nginx/certificates/cep.test.key:/etc/ssl/cep.test.key
+      - ./conf/portal/settings_secret.py:/srv/www/portal/server/portal/settings/settings_secret.py
+      - ./conf/portal/settings_custom.py:/srv/www/portal/server/portal/settings/settings_custom.py
+    container_name: core_websockets
+    # ** NOTE: Run this daphne command below to run a production-ready daphne server,
+    # ** matching deployed configurations. Be aware there is no autoreload for local
+    # ** development with this enabled.
+    # command: 'daphne -b 0.0.0.0 -p 9000 -e ssl:443:privateKey=/etc/ssl/cep.test.key:certKey=/etc/ssl/cep.test.crt --root-path=/srv/www/portal/server --access-log - --proxy-headers portal.asgi:application'
+    command: 'python manage.py runserver 0.0.0.0:9000'
+    networks:
+      - ${PORTAL_NETWORK_NAME}
+
+  portal:
+    image: ${PORTAL_IMAGE}:${PORTAL_TAG}
+    volumes:
+      - /var/www/portal/portal/media:/srv/www/portal/server/media
+      - /var/www/portal/portal/static:/srv/www/portal/server/static
+      - ./conf/portal/settings_secret.py:/srv/www/portal/server/portal/settings/settings_secret.py
+      - ./conf/portal/settings_custom.py:/srv/www/portal/server/portal/settings/settings_custom.py
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    stdin_open: true
+    tty: true
+    # ** NOTE: Run this uwsgi command below to run a uwsgi server instead of http server,
+    # ** matching deployed configurations. You must also edit nginx.conf. Be aware there
+    # ** is no autoreload for local development with this enabled.
+    # command: uwsgi --ini /srv/www/portal/server/conf/uwsgi/uwsgi_core.ini
+    command: python manage.py runserver --noasgi 0.0.0.0:6000
+    container_name: core_django
+    networks:
+      - ${PORTAL_NETWORK_NAME}
+
+  workers:
+    image: ${WORKERS_IMAGE}:${WORKERS_TAG}
+    volumes:
+      - ./conf/portal/settings_secret.py:/srv/www/portal/server/portal/settings/settings_secret.py
+      - ./conf/portal/settings_custom.py:/srv/www/portal/server/portal/settings/settings_custom.py
+      - /var/www/portal/portal/media:/srv/www/portal/server/media
+      - /var/www/portal/portal/static:/srv/www/portal/server/static
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    command: "celery -A portal worker -Q default,indexing,files,api,onboard --concurrency=2"
+    container_name: core_workers
+    networks:
+      - ${PORTAL_NETWORK_NAME}
+
+  colormoves:
+    # Uncomment this line to use an image defined in .env file. (1/4)
+    image: ${COLORMOVES_APP_IMAGE}:${COLORMOVES_APP_TAG}
+    # Comment out the build block if using an image. (2/4)
+    # build:
+    #   context: .
+    #   dockerfile: ./Dockerfile
+    # Comment out the volume block if using an image. (3/4)
+    # volumes:
+    #   - .:/colormoves
+    ports:
+      - 8888:8888
+    environment:
+      - USE_DEV_CLIENT=false   # Set to false if using an image. (4/4)
+    stdin_open: true
+    tty: true
+    command: ['--report-compact']
+    container_name: colormoves
+    hostname: colormoves
+    restart: always
+    networks:
+      - ${PORTAL_NETWORK_NAME}
+
+
+volumes:
+  core_redis_data:
+  core_rabbitmq_data:
+  core_es_data:
+  core_postgres_data:
+  core_cms_postgres_data:
+  # colormoves_app_distribution:
+
+
+networks:
+  ${PORTAL_NETWORK_NAME}:

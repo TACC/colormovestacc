@@ -1,17 +1,14 @@
-#############################
 ### ENV VARS ###########
-
 DOCKERHUB_REPO := $(shell cat ./docker_repo.var)
 DOCKER_TAG ?= $(shell git rev-parse --short HEAD)
 DOCKER_IMAGE := $(DOCKERHUB_REPO):$(DOCKER_TAG)
 DOCKER_IMAGE_LATEST := $(DOCKERHUB_REPO):latest
-# DOCKER_IMAGE_BRANCH is the git tag for the commit (if it exists, else it is the branch on which the commit exists).
+# Note: DOCKER_IMAGE_BRANCH is the git tag for the commit,
+# if it exists, else it is the branch on which the commit exists
 DOCKER_IMAGE_BRANCH := $(DOCKERHUB_REPO):$(shell git describe --exact-match --tags 2> /dev/null || git symbolic-ref --short HEAD)
 
 
-#############################
 ### BUILD  ###########
-
 # Build the colormoves app image from source using docker compose.
 .PHONY: build
 build: build-image
@@ -23,9 +20,7 @@ build-image:
 	docker build -t $(DOCKER_IMAGE) -f ./Dockerfile .
 
 
-#############################
 ### INFO  ###########
-
 # Display info about the current setup.
 .PHONY: info
 info: info-make info-colormoves
@@ -47,18 +42,7 @@ info-make:
 	@echo $(DOCKER_IMAGE_BRANCH)
 
 
-#############################
-### UTILS  ###########
-
-# Open a browser window for the application.
-.PHONY: open-browser
-open-browser:
-	open http://0.0.0.0:8888 &
-
-
-#############################
 ### PUBLISH  ###########
-
 # Publish the current image tag to docker hub.
 .PHONY: publish
 publish: publish-latest
@@ -75,55 +59,63 @@ tag-image:
 	docker tag $(DOCKER_IMAGE) $(DOCKER_IMAGE_LATEST)
 
 
-#############################
 ### START  ###########
-
-# Start the app.
+# Start the app (used in automated deployments).
 .PHONY: start
 start:
-	docker-compose -f docker-compose.yml up &
+	docker-compose -f docker-compose.yml up
 
+# Start the app using a published image and open a browser.
 .PHONY: start-app
 start-app: start-image open-browser
 	@echo "Starting Colormoves using latest image..." &
 
-# Start the app.
+# Start the app for integration testing and open a browser.
 .PHONY: start-dev
-start-dev:
-	docker-compose -f docker-compose.core-w-app.yml --verbose up &
-# docker-compose -f docker-compose.fullcms.yml up &
+start-dev: open-browser
+	docker-compose -f docker-compose.dev.yml --verbose up &
 
-.PHONY: start-src
-start-src: start open-browser
-	@echo "Starting Colormoves using local source..." &
-
+# Start the app using an image.
 .PHONY: start-image
 start-image:
 	docker run --name colormoves -p 8888:8888 taccwma/colormovestacc:latest &
 
+# Start the app using source code and open a browser window.
+.PHONY: start-src
+start-src: start open-browser
+	@echo "Starting Colormoves using local source..." &
 
-#############################
+
 ### STOP  ###########
-
-# Stop the running app.
+# Start the app (used in automated deployments).
 .PHONY: stop
 stop:
 	docker-compose -f docker-compose.yml down
 
+# Stop the app running a published image.
 .PHONY: stop-app
 stop-app: stop-image
 	@echo "Colormoves is shutting down."
 
+# Stop the integration testing.
 .PHONY: stop-dev
 stop-dev:
-	docker-compose -f docker-compose.core-w-app.yml down
-# docker-compose -f docker-compose.fullcms.yml down
+	docker-compose -f docker-compose.dev.yml --verbose down
 
-.PHONY: stop-src
-stop-src: stop
-	@echo "Colormoves is shutting down."
-
+# Stop the app running an image.
 .PHONY: stop-image
 stop-image:
 	docker kill colormoves
 	docker rm colormoves
+
+# Stop the app running source.
+.PHONY: stop-src
+stop-src: stop
+	@echo "Colormoves is shutting down."
+
+
+### UTILS  ###########
+# Open a browser window for the application.
+.PHONY: open-browser
+open-browser:
+	open http://0.0.0.0:8888 &
