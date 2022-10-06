@@ -56,7 +56,7 @@ services:
     container_name: core_portal_elasticsearch
     ports:
       - 9200:9200
-      networks:
+    networks:
       - sciviscolor_net
 
   postgres:
@@ -167,7 +167,7 @@ services:
       - sciviscolor_net
 
   colormoves:
-     # Uncomment this line to use an image defined in .env file. (1/4)
+    # Uncomment this line to use an image defined in .env file. (1/4)
     image: ${COLORMOVES_APP_IMAGE}:${COLORMOVES_APP_TAG}
     # Comment out the build block if using an image. (2/4)
     # build:
