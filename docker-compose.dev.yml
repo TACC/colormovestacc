@@ -64,8 +64,8 @@ services:
   postgres:
     image: ${POSTGRES_PORTAL_IMAGE}:${POSTGRES_PORTAL_TAG}
     volumes:
-      - core_postgres_data:/var/lib/postgresql/data/portal
-    container_name: core_postgres
+      - core_portal_postgres_data:/var/lib/postgresql/data/portal
+    container_name: core_portal_postgres
     environment:
       - POSTGRES_PASSWORD=dev
       - POSTGRES_USER=dev
@@ -193,7 +193,7 @@ volumes:
   core_redis_data:
   core_rabbitmq_data:
   core_es_data:
-  core_postgres_data:
+  core_portal_postgres_data:
   core_cms_postgres_data:
   # colormoves_app_distribution:
 
