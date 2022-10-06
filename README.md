@@ -4,15 +4,24 @@ The interactive color mapping tool used in the SciVisColor.org portal.
 
 ## Getting Started
 
-1. Clone the repo: `git clone https://github.com/TACC/colormovestacc.git`
+1. Clone the source code repository.
+2. Install the prerequisites.
+3. Build & run the application.
 
-2. Build & run the application.
+## 1. Get the Source Code
 
+`git clone https://github.com/TACC/colormovestacc.git`
 
-**A. Using Node**
+## 2. Install the Prerequisites
 
-- _Note: It is recommended to use an environment manager such as [miniconda](https://docs.conda.io/en/latest/miniconda.html)._
-- **PREREQUISITE**:  Install the correct version of [node](https://nodejs.org/en/download/) (the published image is using `v18.8.0`).
+- [Node](https://nodejs.org/en/download/) (`v18.8.0` or newer)
+- [Docker](https://www.docker.com/products/docker-desktop/) (latest)
+- [Make](https://www.gnu.org/software/make/) (latest)
+- _Note: In order to avoid runtime environment pollution, we recommended installing and activating an environment manager such as_ [miniconda](https://docs.conda.io/en/latest/miniconda.html) _before installing the project dependencies locally_.
+
+## 2. Build & Run Colormoves
+
+### A. With `Node`
 
 ```
 # Activate the environment (if using one).
@@ -28,9 +37,7 @@ The interactive color mapping tool used in the SciVisColor.org portal.
 ~/colormovestacc/> node server.js
 ```
 
-**B. Using Docker**
-
-- **PREREQUISITE**: Install and run [docker](https://www.docker.com/products/docker-desktop/).
+### B. With `Docker`
 
 ```
 # Pull and run the latest published image.
@@ -51,9 +58,7 @@ The interactive color mapping tool used in the SciVisColor.org portal.
 docker kill colormoves
 ```
 
-**C. Using Make**
-
-- **PREREQUISITE**: Install [Make](https://www.gnu.org/software/make/).
+### C. With `Make`
 
 ```
 # Navigate into the cloned repo.
@@ -69,14 +74,18 @@ docker kill colormoves
 # Note: these launch a browser window automatically.
 
 -- From the latest published image:
-    ~/colormovestacc/> make start-app
+~/colormovestacc/> make start-app
 
 -- From the local source code:
-    ~/colormovestacc/> make start-src
+~/colormovestacc/> make start-src
+
+-- Integration testing with the full core portal stack:
+~/colormovestacc/> make start-dev
 
 # To stop the running containers and remove them, reverse the start command.
 ~/colormovestacc/> make stop-app
 ~/colormovestacc/> make stop-src
+~/colormovestacc/> make stop-dev
 
 # NOTE: Publish requires access to the taccwma dockerhub repo.
 
@@ -87,18 +96,16 @@ docker kill colormoves
 ~/colormovestacc/> make publish-latest
 ```
 
-A browser window should launch automatically when you run the application, but you can also access it by manually opening a window and entering any of the following URLs:
+### Accessing the Colormoves Application
 
-Access the app from the browser at the `/` or `/colormoves` endpoint:
+A browser window should launch automatically when you run the application using the make-* commands, but you can also access it by manually opening a browser window and entering any of the following URLs to the `/` or `/colormoves` endpoints:
 
 - [localhost:8888/](localhost:8888/)
-- [0.0.0.0:8888/](0.0.0.0:8888/)
-- `LOCAL_IP_ADDRESS:8888/`
 - [localhost:8888/colormoves](localhost:8888/colormoves)
-- [0.0.0.0:8888/colormoves(0.0.0.0:8888/colormoves)
-- `LOCAL_IP_ADDRESS:8888/colormoves`
+- [0.0.0.0:8888/](0.0.0.0:8888/)
+- [0.0.0.0:8888/colormoves](0.0.0.0:8888/colormoves)
 
-## Using Colormoves
+## Using the Colormoves Application
 
 1. Select a color scheme from the left column and drag it into the bottom graph.
 2. Select one of the `colormovestacc/test_files/*.png` files (in the code repo) and drag it into the upper display panel.
