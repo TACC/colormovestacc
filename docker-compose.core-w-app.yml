@@ -17,12 +17,16 @@ services:
     container_name: core_portal_cms
     depends_on:
       - postgrescms
+    networks:
+      - sciviscolor_net
 
   redis:
     image: redis:5.0
     volumes:
       - core_portal_redis_data:/data
     container_name: core_portal_redis
+    networks:
+      - sciviscolor_net
 
   rabbitmq:
     image: rabbitmq:3.7.17-management
@@ -30,10 +34,14 @@ services:
       - core_portal_rabbitmq_data:/var/lib/rabbitmq/mnesia/rabbit@core_portal_rabbitmq
     env_file: ./conf/env_files/rabbitmq.env
     container_name: core_portal_rabbitmq
+    networks:
+      - sciviscolor_net
 
   memcached:
     image: memcached:latest
     container_name: core_portal_memcached
+    networks:
+      - sciviscolor_net
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
@@ -48,6 +56,8 @@ services:
     container_name: core_portal_elasticsearch
     ports:
       - 9200:9200
+      networks:
+      - sciviscolor_net
 
   postgres:
     image: postgres:11.5
@@ -59,6 +69,8 @@ services:
       - POSTGRES_USER=dev
       - POSTGRES_DB=dev
       - PGDATA=/var/lib/postgresql/data/portal
+    networks:
+      - sciviscolor_net
 
   postgrescms:
     image: postgres:11.5
@@ -70,6 +82,8 @@ services:
       - POSTGRES_USER=postgresadmin
       - POSTGRES_DB=taccsite
       - PGDATA=/var/lib/postgresql/data/portal
+    networks:
+      - sciviscolor_net
 
   nginx:
     image: nginx
@@ -95,6 +109,8 @@ services:
     depends_on:
       - cms
       - core
+    networks:
+      - sciviscolor_net
 
   websockets:
     image: ${PORTAL_IMAGE}:${PORTAL_TAG}
@@ -110,6 +126,8 @@ services:
     # ** development with this enabled.
     # command: 'daphne -b 0.0.0.0 -p 9000 -e ssl:443:privateKey=/etc/ssl/cep.test.key:certKey=/etc/ssl/cep.test.crt --root-path=/srv/www/portal/server --access-log - --proxy-headers portal.asgi:application'
     command: 'python manage.py runserver 0.0.0.0:9000'
+    networks:
+      - sciviscolor_net
 
   core:
     image: ${PORTAL_IMAGE}:${PORTAL_TAG}
@@ -130,6 +148,8 @@ services:
     # command: uwsgi --ini /srv/www/portal/server/conf/uwsgi/uwsgi_core.ini
     command: python manage.py runserver --noasgi 0.0.0.0:6000
     container_name: core_portal_django
+    networks:
+      - sciviscolor_net
 
   workers:
     image: ${PORTAL_IMAGE}:${PORTAL_TAG}
@@ -143,6 +163,8 @@ services:
       - 8.8.4.4
     command: "celery -A portal worker -Q default,indexing,files,api,onboard --concurrency=2"
     container_name: core_portal_workers
+    networks:
+      - sciviscolor_net
 
   colormoves:
      # Uncomment this line to use an image defined in .env file. (1/4)
@@ -164,6 +186,8 @@ services:
     container_name: colormoves
     hostname: colormoves
     restart: always
+    networks:
+      - sciviscolor_net
 
 
 volumes:
@@ -173,3 +197,7 @@ volumes:
   core_portal_postgres_data:
   core_cms_postgres_data:
   # colormoves_app_distribution:
+
+
+networks:
+  sciviscolor_net:
