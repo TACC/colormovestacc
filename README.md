@@ -62,8 +62,8 @@ docker kill colormoves
 # Build an image.
 ~/colormovestacc/> make build
 
-# Build a tagged image.
-~/colormovestacc/> make build-full
+# Build a tagged image from source.
+~/colormovestacc/> make build-image
 
 # Start the application in one of several ways.
 # Note: these launch a browser window automatically.
