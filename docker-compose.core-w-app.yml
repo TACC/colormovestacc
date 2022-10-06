@@ -4,7 +4,6 @@
 version: "3.8"
 services:
   cms:
-    # image: taccwma/core-cms:latest
     image: ${CMS_IMAGE}:${CMS_TAG}
     volumes:
       - ./conf/cms/settings_custom.py:/code/taccsite_cms/settings_custom.py
@@ -76,24 +75,19 @@ services:
     image: nginx
     volumes:
       - ./conf/nginx/nginx.conf:/etc/nginx/nginx.conf
-      # - ./conf/nginx/protx.location.conf:/etc/nginx/conf.d/protx.location.conf
-      # - ./conf/nginx/data.location.conf:/etc/nginx/conf.d/data.location.conf
-      # - ./conf/nginx/assets.location.conf:/etc/nginx/conf.d/assets.location.conf
       - ./conf/uwsgi/uwsgi_params:/etc/nginx/uwsgi_params
       - ./conf/nginx/gzip.conf:/etc/nginx/gzip.conf
       - ./conf/nginx/certificates/cep.test.crt:/etc/ssl/cep.test.crt
       - ./conf/nginx/certificates/cep.test.key:/etc/ssl/cep.test.key
-      # - ./conf/certificates/cep.test.crt:/etc/ssl/certs/portal.cer
-      # - ./conf/certificates/cep.test.key/:/etc/ssl/private/portal.key
       - ./conf/nginx/dhparam.pem:/etc/ssl/dhparam.pem
-      # - ../../../.:/srv/www/portal    # WHY??
       - /var/www/portal/cms/static:/var/www/portal/cms/static
       - /var/www/portal/cms/media:/var/www/portal/cms/media
       - /var/www/portal/portal/media:/var/www/portal/portal/media
       - /var/www/portal/portal/static:/var/www/portal/portal/static
-      # - protx_geospatial_data:/protx-data/static
+      - ./conf/nginx/colormoves.location.conf:/etc/nginx/conf.d/colormoves.location.conf
+      - ./conf/nginx/assets.location.conf:/etc/nginx/conf.d/assets.location.conf
+      # - colormoves_app_distribution:/colormoves-app-distribution
       # - ./protx-client:/var/www/portal/protx-client
-      # - protx_app_distribution:/protx-app-distribution
     ports:
       - 80:80
       - 443:443
@@ -105,9 +99,11 @@ services:
   websockets:
     image: ${PORTAL_IMAGE}:${PORTAL_TAG}
     volumes:
-      - ../../../.:/srv/www/portal
-      - ../nginx/certificates/cep.test.crt:/etc/ssl/cep.test.crt
-      - ../nginx/certificates/cep.test.key:/etc/ssl/cep.test.key
+      - ./conf/nginx/certificates/cep.test.crt:/etc/ssl/cep.test.crt
+      - ./conf/nginx/certificates/cep.test.key:/etc/ssl/cep.test.key
+      # FROM PROTX.
+      - ./conf/portal/settings_secret.py:/srv/www/portal/server/portal/settings/settings_secret.py
+      - ./conf/portal/settings_custom.py:/srv/www/portal/server/portal/settings/settings_custom.py
     container_name: core_portal_websockets
     # ** NOTE: Run this daphne command below to run a production-ready daphne server,
     # ** matching deployed configurations. Be aware there is no autoreload for local
@@ -118,10 +114,11 @@ services:
   core:
     image: ${PORTAL_IMAGE}:${PORTAL_TAG}
     volumes:
-      - ./conf/portal/settings_secret.py:/srv/www/portal/server/portal/settings/settings_secret.py
-      - ./conf/portal/settings_custom.py:/srv/www/portal/server/portal/settings/settings_custom.py
       - /var/www/portal/portal/media:/srv/www/portal/server/media
       - /var/www/portal/portal/static:/srv/www/portal/server/static
+      # FROM PROTX.
+      - ./conf/portal/settings_secret.py:/srv/www/portal/server/portal/settings/settings_secret.py
+      - ./conf/portal/settings_custom.py:/srv/www/portal/server/portal/settings/settings_custom.py
     dns:
       - 8.8.8.8
       - 8.8.4.4
@@ -147,23 +144,20 @@ services:
     command: "celery -A portal worker -Q default,indexing,files,api,onboard --concurrency=2"
     container_name: core_portal_workers
 
-  # docs:
-  #   image: taccwma/frontera-docs:latest-master
-  #   volumes:
-  #     - ../../docs:/docs/site
-  #   command: ["mkdocs", "build"]
-  #   container_name: frontera_docs
-
   colormoves:
+     # Uncomment this line to use an image defined in .env file. (1/4)
+    image: ${COLORMOVES_APP_IMAGE}:${COLORMOVES_APP_TAG}
+    # Comment out the build block if using an image. (2/4)
     # build:
     #   context: .
     #   dockerfile: ./Dockerfile
-    # image: taccwma/colormovestacc:latest
-    image: ${COLORMOVES_APP_IMAGE}:${COLORMOVES_APP_TAG}
+    # Comment out the volume block if using an image. (3/4)
     # volumes:
     #   - .:/colormoves
     ports:
       - 8888:8888
+    environment:
+      - USE_DEV_CLIENT=false   # Set to false if using an image. (4/4)
     stdin_open: true
     tty: true
     command: ['--report-compact']
@@ -178,3 +172,4 @@ volumes:
   core_portal_es_data:
   core_portal_postgres_data:
   core_cms_postgres_data:
+  # colormoves_app_distribution:
