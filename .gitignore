@@ -93,3 +93,7 @@ coverage.xml
 
 # diskacahe
 */database_cache/*
+
+# Integration testing folders for cms.
+conf/cms/media/*
+conf/cms/static/*
