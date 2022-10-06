@@ -67,23 +67,23 @@ start:
 
 # Start the app using a published image and open a browser.
 .PHONY: start-app
-start-app: start-image open-browser
-	@echo "Starting Colormoves using latest image..." &
+start-app: open-browser start-image
+	@echo "Starting Colormoves using latest image..."
 
 # Start the app for integration testing and open a browser.
 .PHONY: start-dev
 start-dev: open-browser
-	docker-compose -f docker-compose.dev.yml --verbose up &
+	docker-compose -f docker-compose.dev.yml --verbose up
 
 # Start the app using an image.
 .PHONY: start-image
 start-image:
-	docker run --name colormoves -p 8888:8888 taccwma/colormovestacc:latest &
+	docker run --name colormoves -p 8888:8888 taccwma/colormovestacc:latest
 
 # Start the app using source code and open a browser window.
 .PHONY: start-src
-start-src: start open-browser
-	@echo "Starting Colormoves using local source..." &
+start-src: open-browser start
+	@echo "Starting Colormoves using local source..."
 
 
 ### STOP  ###########
