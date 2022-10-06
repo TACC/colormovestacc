@@ -146,7 +146,7 @@ services:
     # ** is no autoreload for local development with this enabled.
     # command: uwsgi --ini /srv/www/portal/server/conf/uwsgi/uwsgi_core.ini
     command: python manage.py runserver --noasgi 0.0.0.0:6000
-    container_name: core_django
+    container_name: core_portal
     networks:
       - ${PORTAL_NETWORK_NAME}
 
@@ -199,4 +199,5 @@ volumes:
 
 
 networks:
-  ${PORTAL_NETWORK_NAME}:
+  sciviscolor-net:
+    name: ${PORTAL_NETWORK_NAME}
