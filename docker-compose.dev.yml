@@ -13,8 +13,8 @@ services:
       - ./conf/cms/uwsgi/uwsgi.ini:/code/uwsgi.ini
       - ./conf/cms/static:/code/static
       - ./conf/cms/media:/code/media
-      - /var/www/portal/cms/static:/code/static
-      - /var/www/portal/cms/media:/code/media
+      # - /var/www/portal/cms/static:/code/static
+      # - /var/www/portal/cms/media:/code/media
     command: ["uwsgi", "--ini", "uwsgi.ini"]
     container_name: core_cms
     depends_on:
@@ -102,16 +102,18 @@ services:
       - /var/www/portal/portal/static:/var/www/portal/portal/static
       - ./conf/nginx/colormoves.upstream.conf:/etc/nginx/conf.d/colormoves.upstream.conf
       - ./conf/nginx/colormoves.location.conf:/etc/nginx/conf.d/colormoves.location.conf
+    container_name: core_nginx
     ports:
       - 80:80
       - 443:443
-    container_name: core_nginx
+    networks:
+      - ${PORTAL_NETWORK_NAME}
     restart: always
     depends_on:
       - cms
       - portal
-    networks:
-      - ${PORTAL_NETWORK_NAME}
+      - colormoves
+
 
   websockets:
     image: ${WEBSOCKETS_IMAGE}:${WEBSOCKETS_TAG}
