@@ -97,3 +97,4 @@ coverage.xml
 # Integration testing folders for cms.
 conf/cms/media/*
 conf/cms/static/*
+conf/nginx/colormoves.*.test.conf

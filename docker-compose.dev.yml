@@ -20,8 +20,8 @@ services:
     depends_on:
       - postgrescms
     networks:
-      # - ${PORTAL_NETWORK_NAME}
-      - sciviscolor-net
+      - ${PORTAL_NETWORK_NAME}
+      # - sciviscolor-net
 
   redis:
     image: ${REDIS_IMAGE}:${REDIS_TAG}
@@ -29,8 +29,8 @@ services:
       - core_redis_data:/data
     container_name: core_redis
     networks:
-      # - ${PORTAL_NETWORK_NAME}
-      - sciviscolor-net
+      - ${PORTAL_NETWORK_NAME}
+      # - sciviscolor-net
 
   rabbitmq:
     image: ${RABBITMQ_IMAGE}:${RABBITMQ_TAG}
@@ -39,15 +39,15 @@ services:
     env_file: ./conf/env_files/rabbitmq.env
     container_name: core_rabbitmq
     networks:
-      # - ${PORTAL_NETWORK_NAME}
-      - sciviscolor-net
+      - ${PORTAL_NETWORK_NAME}
+      # - sciviscolor-net
 
   memcached:
     image: ${MEMCACHED_IMAGE}:${MEMCACHED_TAG}
     container_name: core_memcached
     networks:
-      # - ${PORTAL_NETWORK_NAME}
-      - sciviscolor-net
+      - ${PORTAL_NETWORK_NAME}
+      # - sciviscolor-net
 
   elasticsearch:
     image: ${ELASTICSEARCH_IMAGE}
@@ -63,8 +63,8 @@ services:
     ports:
       - 9200:9200
     networks:
-      # - ${PORTAL_NETWORK_NAME}
-      - sciviscolor-net
+      - ${PORTAL_NETWORK_NAME}
+      # - sciviscolor-net
 
   postgres:
     image: ${POSTGRES_PORTAL_IMAGE}:${POSTGRES_PORTAL_TAG}
@@ -77,8 +77,8 @@ services:
       - POSTGRES_DB=dev
       - PGDATA=/var/lib/postgresql/data/portal
     networks:
-      # - ${PORTAL_NETWORK_NAME}
-      - sciviscolor-net
+      - ${PORTAL_NETWORK_NAME}
+      # - sciviscolor-net
 
   postgrescms:
     image: ${POSTGRES_CMS_IMAGE}:${POSTGRES_CMS_TAG}
@@ -91,8 +91,8 @@ services:
       - POSTGRES_DB=taccsite
       - PGDATA=/var/lib/postgresql/data/portal
     networks:
-      # - ${PORTAL_NETWORK_NAME}
-      - sciviscolor-net
+      - ${PORTAL_NETWORK_NAME}
+      # - sciviscolor-net
 
   nginx:
     image: ${NGINX_IMAGE}
@@ -112,14 +112,17 @@ services:
     ports:
       - 80:80
       - 443:443
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
     container_name: core_nginx
     restart: always
     depends_on:
       - cms
       - portal
     networks:
-      # - ${PORTAL_NETWORK_NAME}
-      - sciviscolor-net
+      - ${PORTAL_NETWORK_NAME}
+      # - sciviscolor-net
 
   websockets:
     image: ${WEBSOCKETS_IMAGE}:${WEBSOCKETS_TAG}
@@ -135,8 +138,8 @@ services:
     command: 'daphne -b 0.0.0.0 -p 9000 -e ssl:443:privateKey=/etc/ssl/cep.test.key:certKey=/etc/ssl/cep.test.crt --root-path=/srv/www/portal/server --access-log - --proxy-headers portal.asgi:application'
     # command: 'python manage.py runserver 0.0.0.0:9000'
     networks:
-      # - ${PORTAL_NETWORK_NAME}
-      - sciviscolor-net
+      - ${PORTAL_NETWORK_NAME}
+      # - sciviscolor-net
 
   portal:
     image: ${PORTAL_IMAGE}:${PORTAL_TAG}
@@ -157,8 +160,8 @@ services:
     # command: python manage.py runserver --noasgi 0.0.0.0:6000
     container_name: core_portal
     networks:
-      # - ${PORTAL_NETWORK_NAME}
-      - sciviscolor-net
+      - ${PORTAL_NETWORK_NAME}
+      # - sciviscolor-net
 
   workers:
     image: ${WORKERS_IMAGE}:${WORKERS_TAG}
@@ -173,8 +176,8 @@ services:
     command: "celery -A portal worker -Q default,indexing,files,api,onboard --concurrency=2"
     container_name: core_workers
     networks:
-      # - ${PORTAL_NETWORK_NAME}
-      - sciviscolor-net
+      - ${PORTAL_NETWORK_NAME}
+      # - sciviscolor-net
 
   colormoves:
     image: ${COLORMOVES_APP_IMAGE}:${COLORMOVES_APP_TAG}
@@ -189,10 +192,10 @@ services:
     hostname: colormoves
     restart: always
     networks:
-      # - ${PORTAL_NETWORK_NAME}
-      sciviscolor-net:
-        aliases:
-          - colormoves
+      - ${PORTAL_NETWORK_NAME}
+      # sciviscolor-net:
+        # aliases:
+          # - colormoves
 
 
 volumes:
@@ -205,5 +208,5 @@ volumes:
 
 networks:
   sciviscolor-net:
-    # name: ${PORTAL_NETWORK_NAME}
-    name: sciviscolor-net
+    name: ${PORTAL_NETWORK_NAME}
+    # name: sciviscolor-net
