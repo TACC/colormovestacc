@@ -100,8 +100,8 @@ services:
       - /var/www/portal/cms/media:/var/www/portal/cms/media
       - /var/www/portal/portal/media:/var/www/portal/portal/media
       - /var/www/portal/portal/static:/var/www/portal/portal/static
+      - ./conf/nginx/colormoves.upstream.conf:/etc/nginx/conf.d/colormoves.upstream.conf
       - ./conf/nginx/colormoves.location.conf:/etc/nginx/conf.d/colormoves.location.conf
-      - ./conf/nginx/assets.location.conf:/etc/nginx/conf.d/assets.location.conf
     ports:
       - 80:80
       - 443:443
