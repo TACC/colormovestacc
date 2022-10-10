@@ -1,12 +1,10 @@
 body {
-    margin: 1rem;
+    margin: 0;
     text-align: center;
 }
-
 label {
 	z-index: -1;
 }
-
 #divWorkArea {
 	position: absolute;
 	top: 0px;
@@ -14,19 +12,13 @@ label {
 	width: 100%;
 	height: 100%;
 }
-
 #ImageSection {
-	/*position: absolute;*/
 	width: -moz-calc(100% - 16);
     width: -webkit-calc(100% - 16);
     width: calc(100% - 16);
 	height: 400;
-	
 	border:1px solid black;
 	margin: 8px;
-
-	/*resize: vertical;
-	overflow: auto;*/
 }
 #cvImage {
 	width: 100%;
@@ -38,12 +30,9 @@ label {
 	top: -56;
 	margin: 0 auto;
 	position: relative;
-	
 	border-radius: 8px;
 	border: 1px solid;
-	
 	padding: 4px;
-	
 	background-color: white;
 }
 #ImageCloseButton {
@@ -70,7 +59,6 @@ label {
     font-family: monospace;
     padding: 1em;
 }
-
 #HighlightLine {
 	position: absolute;
 	left: 0;
@@ -101,38 +89,28 @@ label {
 #HighlightLineLabel p {
 	padding: 8;
 }
-
-
 #ColorMapSection {
-	/*position: absolute;*/
 	width: 100%;
 	height: 400;
-	/*border: 1px solid black;*/
-	
-	/*resize: vertical;
-    overflow: auto;*/
 	overflow: hidden;
 }
 #LeftControlSection {
 	position: relative;
-	/*width: 5vw;*/
 	width: 5%;
 	height: 100%;
-	max-width: 43; /*82*/
+	max-width: 43;
 	float: left;
 }
 #LeftHistogramResolution {
 	position: relative;
-	/*width: 5vw;*/
 	width: 5%;
 	height: 100%;
-	max-width: 43; /*82*/
+	max-width: 43;
 	float: left;
 	left: 10px;
 }
 #RightControlSection {
 	position: relative;
-	/*width: 5vw;*/
 	width: 5%;
 	height: 100%;
 	max-width: 43;
@@ -141,16 +119,10 @@ label {
 #divColorMap {
 	position: relative;
 	width: 85%;
-	/*width: 90vw;*/
-	/*left: 50;
-	right: 50;*/
 	height: 100%;
-	/*display: inline-block;*/
 	float: left;
-	/*left: 5vw;*/
 	left: 0%;
 }
-
 .lblHistogramV {
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 	font-size: 12px;
@@ -182,7 +154,6 @@ label {
 	padding-bottom: 3;
 	background: none;
 }
-
 .button {
 	position: relative;
 	top: 0px;
@@ -214,7 +185,6 @@ label {
 	max-height: 43;
 	padding-left: 4px;
 	padding-right: 4px;
-	/*visibility: hidden;*/
 	display: none;
 }
 #rangeHistogramResolution {
@@ -227,13 +197,12 @@ label {
 	writing-mode: bt-lr;
 	-webkit-appearance: slider-vertical;
 }
-
 #divColorMapPicker {
 	top: 0px;
 	left: 0px;
 	/*width: 100%;*/
-width: 200px;
-height: 100%;
+	width: 200px;
+	height: 100%;
 	z-index: 2;
 	position: fixed;
 	background-color: transparent;
@@ -246,14 +215,12 @@ width: 100%;
 /*height: 100%;*/
 overflow: scroll;
 	table-layout: fixed;
-	
 	border: 1px solid #e3e3e3;
 	background-color: #f2f2f2;
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
 }
 #tableColorMapPicker td, #tableColorMapPicker th {
-	/*padding: 5px;*/
 	color: #333;
 }
 #tableColorMapPicker thead {
@@ -315,7 +282,6 @@ overflow: scroll;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 	font-size: 12px;
 }
@@ -336,7 +302,6 @@ overflow: scroll;
 	border: 1px solid black;
 	opacity: 0;
 }
-
 input[type='number'] {
 	-moz-appearance:textfield;
 }
