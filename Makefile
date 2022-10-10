@@ -72,7 +72,7 @@ start-app: open-browser start-image
 
 # Start the app using source code and open a browser window.
 .PHONY: start-dev
-start-src: open-browser start
+start-dev: open-browser start
 	@echo "Starting Colormoves using local source..."
 
 # Start the app using an image.
@@ -94,7 +94,7 @@ stop-app: stop-image
 
 # Stop the app running source.
 .PHONY: stop-dev
-stop-src: stop
+stop-dev: stop
 	@echo "Colormoves is shutting down."
 
 # Stop the app running an image.
