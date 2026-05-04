@@ -1,7 +1,13 @@
+#!make
+
 #############################
 ### ENV VARS ###########
 
-DOCKERHUB_REPO := $(shell cat ./docker_repo.var)
+# ENV_FILE ?= ./.env
+# include $(ENV_FILE)
+
+# DOCKERHUB_REPO := $(shell cat ./docker_repo.var)
+DOCKERHUB_REPO := taccwma/colormovestacc
 DOCKER_TAG ?= $(shell git rev-parse --short HEAD)
 DOCKER_IMAGE := $(DOCKERHUB_REPO):$(DOCKER_TAG)
 DOCKER_IMAGE_LATEST := $(DOCKERHUB_REPO):latest
@@ -9,6 +15,9 @@ DOCKER_IMAGE_LATEST := $(DOCKERHUB_REPO):latest
 # else it is the branch on which the commit exists.
 DOCKER_IMAGE_BRANCH := $(DOCKERHUB_REPO):$(shell git describe --exact-match --tags 2> /dev/null || git symbolic-ref --short HEAD)
 
+ifndef COMPOSE_COMMAND
+override COMPOSE_COMMAND := docker compose
+endif
 
 #############################
 ### BUILD  ###########
@@ -16,7 +25,7 @@ DOCKER_IMAGE_BRANCH := $(DOCKERHUB_REPO):$(shell git describe --exact-match --ta
 # Build the colormoves app image from source using docker compose.
 .PHONY: build
 build:
-	docker-compose -f docker-compose.yml build
+	${COMPOSE_COMMAND} -f docker-compose.yml build
 
 # Build the colormoves app image from source using docker engine.
 .PHONY: build-full
@@ -54,7 +63,8 @@ info-make:
 # Open a browser window for the application.
 .PHONY: open-browser
 open-browser:
-	open http://0.0.0.0:8888 &
+# 	open http://0.0.0.0:8888 &
+	open http://localhost:8888 &
 
 
 #############################
@@ -82,7 +92,7 @@ tag-latest-image:
 # Start the app.
 .PHONY: start
 start:
-	docker-compose -f docker-compose.yml up &
+	${COMPOSE_COMMAND} -f docker-compose.yml up &
 
 .PHONY: start-app
 start-app: start-image open-browser
@@ -103,7 +113,7 @@ start-image:
 # Stop the running app.
 .PHONY: stop
 stop:
-	docker-compose -f docker-compose.yml down
+	${COMPOSE_COMMAND} -f docker-compose.yml down
 
 .PHONY: stop-app
 stop-app: stop-image

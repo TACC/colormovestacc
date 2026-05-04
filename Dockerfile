@@ -1,5 +1,5 @@
-FROM node:latest
-LABEL maintainer="TACC-ACI-WMA <wma_prtl@tacc.utexas.edu>"
+FROM node:lts-trixie-slim
+# LABEL maintainer="TACC-ACI-WMA <wma_prtl@tacc.utexas.edu>"
 WORKDIR /colormoves/
 COPY ./src /colormoves/src
 WORKDIR /colormoves/src
