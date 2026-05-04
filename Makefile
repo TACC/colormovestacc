@@ -28,8 +28,8 @@ build:
 	${COMPOSE_COMMAND} -f docker-compose.yml build
 
 # Build the colormoves app image from source using docker engine.
-.PHONY: build-full
-build-full:
+.PHONY: build-image
+build-image:
 	docker build -t $(DOCKER_IMAGE) -f ./Dockerfile .
 
 
