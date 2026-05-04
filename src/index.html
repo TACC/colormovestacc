@@ -2,33 +2,36 @@
   <head>
     <title>ColorMoves</title>
     <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
-    <link rel="stylesheet" type="text/css" href="ColorMoves.css" />
+    <link rel="icon" href="data:,">
+
+    <!-- 3rd Party CSS -->
+    <link rel="stylesheet" type="text/css" href="styles/ColorMoves.css" />
     <link
       rel="stylesheet"
       href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"
     />
+
+    <!-- 3rd Party Packages -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script type="text/javascript" src="lib/gl-matrix.min.js"></script>
     <script type="text/javascript" src="lib/webgl-utils.js"></script>
-    <script
-      type="text/javascript"
-      src="lib/fits/fits.js"
-      charset="utf-8"
-    ></script>
+    <script type="text/javascript" src="lib/fits/fits.js"></script>
     <script type="text/javascript" src="lib/jszip.min.js"></script>
-    <script type="text/javascript" src="Utility.js"></script>
-    <script type="text/javascript" src="PngChunkReader.js"></script>
-    <script type="text/javascript" src="ImageReader.js"></script>
-    <script type="text/javascript" src="ColormapReader.js"></script>
-    <script type="text/javascript" src="Viewer.js"></script>
-    <script type="text/javascript" src="ImageCanvas.js"></script>
-    <script type="text/javascript" src="ColorMapCanvas.js"></script>
-    <script type="text/javascript" src="ColorMapPicker.js"></script>
-    <script type="text/javascript" src="ActionManager.js"></script>
-    <script type="text/javascript" src="ColorMapCreator.js"></script>
-    <script type="text/javascript" src="Graphics.js"></script>
-    <script type="text/javascript" src="Input.js"></script>
+
+    <!-- Custom Packages -->
+    <script type="text/javascript" src="js/Utility.js"></script>
+    <script type="text/javascript" src="js/PngChunkReader.js"></script>
+    <script type="text/javascript" src="js/ImageReader.js"></script>
+    <script type="text/javascript" src="js/ColormapReader.js"></script>
+    <script type="text/javascript" src="js/Viewer.js"></script>
+    <script type="text/javascript" src="js/ImageCanvas.js"></script>
+    <script type="text/javascript" src="js/ColorMapCanvas.js"></script>
+    <script type="text/javascript" src="js/ColorMapPicker.js"></script>
+    <script type="text/javascript" src="js/ActionManager.js"></script>
+    <script type="text/javascript" src="js/ColorMapCreator.js"></script>
+    <script type="text/javascript" src="js/Graphics.js"></script>
+    <script type="text/javascript" src="js/Input.js"></script>
 
     <!-- >>> Shaders -->
 
@@ -459,16 +462,16 @@
             title="Save Image"
             type="image"
             id="saveImageButton"
-            src="saveImageButton.png"
-            onclick="saveImages();"
+            src="img/saveImageButton.png"
+            onclick="saveImages()"
           />
-          <!--<input class="button" type="image" id="saveImageButton" src="saveImageButton.png" onclick="imageCanvas.save();"/>-->
+          <!--<input class="button" type="image" id="saveImageButton" src="img/saveImageButton.png" onclick="imageCanvas.save();"/>-->
           <input
             class="button"
             title="Zoom to Fit"
             type="image"
             id="zoomFitButton"
-            src="zoomFitButton.png"
+            src="img/zoomFitButton.png"
             onclick="imageCanvas.zoomFit()"
           />
           <input
@@ -476,7 +479,7 @@
             title="Reset Zoom"
             type="image"
             id="zoomResetButton"
-            src="zoomResetButton.png"
+            src="img/zoomResetButton.png"
             onclick="imageCanvas.zoomReset()"
           />
         </div>
@@ -489,23 +492,37 @@
             title="Split Colormap"
             type="image"
             id="cmdSplitter"
-            src="splitterButton.png"
-            onclick="/*hideColorPicker();*/ var canvas = document.getElementById('cvColorMap'); canvas.style.cursor = canvas.style.cursor.indexOf('splitterCursor') != -1 ? CURSOR_DEFAULT : 'url(splitterCursor.png), auto';"
+            src="img/splitterButton.png"
+            onclick="
+              /*hideColorPicker();*/ var canvas =
+                document.getElementById('cvColorMap');
+              canvas.style.cursor =
+                canvas.style.cursor.indexOf('splitterCursor') != -1
+                  ? CURSOR_DEFAULT
+                  : 'url(img/splitterCursor.png), auto';
+            "
           />
           <input
             class="button"
             title="Delete"
             type="image"
             id="cmdTrash1"
-            src="trashButton.png"
+            src="img/trashButton.png"
           />
           <input
             class="button"
             title="Insert Colormap"
             type="image"
             id="cmdInterjector"
-            src="interjectorButton.png"
-            onclick="/*hideColorPicker();*/ var canvas = document.getElementById('cvColorMap'); canvas.style.cursor = canvas.style.cursor.indexOf('interjectorCursor') != -1 ? CURSOR_DEFAULT : 'url(interjectorCursor.png) 9 0, auto';"
+            src="img/interjectorButton.png"
+            onclick="
+              /*hideColorPicker();*/ var canvas =
+                document.getElementById('cvColorMap');
+              canvas.style.cursor =
+                canvas.style.cursor.indexOf('interjectorCursor') != -1
+                  ? CURSOR_DEFAULT
+                  : 'url(img/interjectorCursor.png) 9 0, auto';
+            "
           />
           <div class="button" id="divUndoRedo">
             <input
@@ -513,16 +530,16 @@
               title="Undo"
               type="image"
               id="cmdUndo"
-              src="undoButton.png"
-              onclick="actionManager.undo();"
+              src="img/undoButton.png"
+              onclick="actionManager.undo()"
             />
             <input
               class="narrowButton"
               title="Undo"
               type="image"
               id="cmdUndo2"
-              src="undoButton2.png"
-              onclick="actionManager.undo();"
+              src="img/undoButton2.png"
+              onclick="actionManager.undo()"
               style="display: none"
             />
             <input
@@ -530,16 +547,16 @@
               title="Redo"
               type="image"
               id="cmdRedo"
-              src="redoButton.png"
-              onclick="actionManager.redo();"
+              src="img/redoButton.png"
+              onclick="actionManager.redo()"
             />
             <input
               class="narrowButton"
               title="Redo"
               type="image"
               id="cmdRedo2"
-              src="redoButton2.png"
-              onclick="actionManager.redo();"
+              src="img/redoButton2.png"
+              onclick="actionManager.redo()"
               style="display: none"
             />
           </div>
@@ -620,7 +637,7 @@
             title="Toggle Color Picker"
             type="image"
             id="cmdColormap"
-            src="colorMapButton.png"
+            src="img/colorMapButton.png"
             align="right"
             onclick="toggleColorPicker()"
           />
@@ -629,7 +646,7 @@
             title="Delete"
             type="image"
             id="cmdTrash2"
-            src="trashButton.png"
+            src="img/trashButton.png"
             align="right"
           />
           <input
@@ -637,9 +654,9 @@
             title="Download Colormap"
             type="image"
             id="cmdSaveColormap"
-            src="saveColorMapButton.png"
+            src="img/saveColorMapButton.png"
             align="right"
-            onclick="saveColormap();"
+            onclick="saveColormap()"
           />
           <div id="divHistogramAlpha">
             <input
@@ -647,18 +664,18 @@
               title="Enable Opacity Control"
               type="image"
               id="cmdHistogram"
-              src="histogramButton.png"
+              src="img/histogramButton.png"
               align="right"
-              onclick="onHistogramButtonPressed();"
+              onclick="onHistogramButtonPressed()"
             />
             <input
               class="button"
               title="Enable Opacity Control with Histogram"
               type="image"
               id="cmdAlpha"
-              src="alphaButton.png"
+              src="img/alphaButton.png"
               align="right"
-              onclick="onAlphaButtonPressed();"
+              onclick="onAlphaButtonPressed()"
               style="display: none"
             />
             <input
@@ -666,9 +683,9 @@
               title="Disable Opacity Control"
               type="image"
               id="cmdHistogramAlpha"
-              src="histogramAlphaButton.png"
+              src="img/histogramAlphaButton.png"
               align="right"
-              onclick="onHistogramAlphaButtonPressed();"
+              onclick="onHistogramAlphaButtonPressed()"
               style="display: none"
             />
           </div>
@@ -683,26 +700,26 @@
     <a id="aDownload" download="image.png"></a>
 
     <script>
-      var downloadColormapDialog = $('#downloadColormapDialog').dialog({
+      var downloadColormapDialog = $("#downloadColormapDialog").dialog({
         autoOpen: false,
         modal: true,
         resizable: false,
         buttons: {
           XML: function () {
-            downloadColormapDialog.dialog('close');
+            downloadColormapDialog.dialog("close");
             saveColormapXML();
           },
           JSON: function () {
-            downloadColormapDialog.dialog('close');
+            downloadColormapDialog.dialog("close");
             saveColormapJSON();
           },
           PNG: function () {
-            downloadColormapDialog.dialog('close');
+            downloadColormapDialog.dialog("close");
             saveColormapPNG();
-          }
-        }
+          },
+        },
       });
-      var downloader = document.getElementById('aDownload');
+      var downloader = document.getElementById("aDownload");
 
       var imageCanvas, colorMapCanvas;
       var colormapPicker;
@@ -719,56 +736,56 @@
       var fileDropIsCopy = false;
 
       function onLoad() {
-        lblHistogramH.push(document.getElementById('lblHistogramH0'));
-        lblHistogramH.push(document.getElementById('lblHistogramH1'));
-        lblHistogramH.push(document.getElementById('lblHistogramH2'));
-        lblHistogramH.push(document.getElementById('lblHistogramH3'));
-        lblHistogramH.push(document.getElementById('lblHistogramH4'));
-        lblHistogramH.push(document.getElementById('lblHistogramH5'));
-        lblHistogramH.push(document.getElementById('lblHistogramH6'));
-        lblHistogramH.push(document.getElementById('lblHistogramH7'));
-        lblHistogramH.push(document.getElementById('lblHistogramH8'));
-        lblHistogramH.push(document.getElementById('lblHistogramH9'));
-        lblHistogramH.push(document.getElementById('lblHistogramH10'));
+        lblHistogramH.push(document.getElementById("lblHistogramH0"));
+        lblHistogramH.push(document.getElementById("lblHistogramH1"));
+        lblHistogramH.push(document.getElementById("lblHistogramH2"));
+        lblHistogramH.push(document.getElementById("lblHistogramH3"));
+        lblHistogramH.push(document.getElementById("lblHistogramH4"));
+        lblHistogramH.push(document.getElementById("lblHistogramH5"));
+        lblHistogramH.push(document.getElementById("lblHistogramH6"));
+        lblHistogramH.push(document.getElementById("lblHistogramH7"));
+        lblHistogramH.push(document.getElementById("lblHistogramH8"));
+        lblHistogramH.push(document.getElementById("lblHistogramH9"));
+        lblHistogramH.push(document.getElementById("lblHistogramH10"));
 
-        lblHistogramV.push(document.getElementById('lblHistogramV0'));
-        lblHistogramV.push(document.getElementById('lblHistogramV1'));
-        lblHistogramV.push(document.getElementById('lblHistogramV2'));
-        lblHistogramV.push(document.getElementById('lblHistogramV3'));
-        lblHistogramV.push(document.getElementById('lblHistogramV4'));
-        lblHistogramV.push(document.getElementById('lblHistogramV5'));
-        lblHistogramV.push(document.getElementById('lblHistogramV6'));
-        lblHistogramV.push(document.getElementById('lblHistogramV7'));
-        lblHistogramV.push(document.getElementById('lblHistogramV8'));
-        lblHistogramV.push(document.getElementById('lblHistogramV9'));
-        lblHistogramV.push(document.getElementById('lblHistogramV10'));
+        lblHistogramV.push(document.getElementById("lblHistogramV0"));
+        lblHistogramV.push(document.getElementById("lblHistogramV1"));
+        lblHistogramV.push(document.getElementById("lblHistogramV2"));
+        lblHistogramV.push(document.getElementById("lblHistogramV3"));
+        lblHistogramV.push(document.getElementById("lblHistogramV4"));
+        lblHistogramV.push(document.getElementById("lblHistogramV5"));
+        lblHistogramV.push(document.getElementById("lblHistogramV6"));
+        lblHistogramV.push(document.getElementById("lblHistogramV7"));
+        lblHistogramV.push(document.getElementById("lblHistogramV8"));
+        lblHistogramV.push(document.getElementById("lblHistogramV9"));
+        lblHistogramV.push(document.getElementById("lblHistogramV10"));
 
         actionManager = new ActionManager(
-          document.getElementById('cmdUndo'),
-          document.getElementById('cmdUndo2'),
-          document.getElementById('cmdRedo'),
-          document.getElementById('cmdRedo2')
+          document.getElementById("cmdUndo"),
+          document.getElementById("cmdUndo2"),
+          document.getElementById("cmdRedo"),
+          document.getElementById("cmdRedo2"),
         );
 
         var tableColorMapPicker = document.getElementById(
-          'tableColorMapPicker'
+          "tableColorMapPicker",
         );
         tableColorMapPicker.ondrop = handleColorMapDrop;
         tableColorMapPicker.ondragover = function (event) {
           if (event.dataTransfer.types == null) return;
           for (var i = 0; i < event.dataTransfer.types.length; ++i)
-            if (event.dataTransfer.types[i] === 'Files') {
+            if (event.dataTransfer.types[i] === "Files") {
               event.preventDefault();
               return;
             }
         };
 
-        var cvImage = document.getElementById('cvImage');
+        var cvImage = document.getElementById("cvImage");
         cvAll.push(
           (imageCanvas = new ImageCanvas(
             cvImage,
-            document.getElementById('ImageSection')
-          ))
+            document.getElementById("ImageSection"),
+          )),
         );
         cvImage.ondrop = handleFileDrop;
         cvImage.ondragleave = function (event) {
@@ -777,25 +794,25 @@
         cvImage.ondragover = function (event) {
           if (event.dataTransfer.types == null) return;
           for (var i = 0; i < event.dataTransfer.types.length; ++i)
-            if (event.dataTransfer.types[i] === 'Files') {
+            if (event.dataTransfer.types[i] === "Files") {
               fileDropIsCopy = event.ctrlKey || event.metaKey;
               event.preventDefault();
               var targetRect = event.target.getBoundingClientRect();
               imageCanvas.showHighlight(
                 event.clientX - targetRect.left,
-                event.clientY - targetRect.top
+                event.clientY - targetRect.top,
               );
               return;
             }
         };
 
-        var cvColorMap = document.getElementById('cvColorMap');
+        var cvColorMap = document.getElementById("cvColorMap");
         cvAll.push(
           (colorMapCanvas = new ColorMapCanvas(
             cvColorMap,
-            document.getElementById('divColorMap'),
-            document.getElementById('divColorMapBounds')
-          ))
+            document.getElementById("divColorMap"),
+            document.getElementById("divColorMapBounds"),
+          )),
         );
         onHistogramAlphaButtonPressed();
 
@@ -806,21 +823,21 @@
           canvas.canvas.onmouseleave = handleMouseLeave;
           if (canvas.onTouchStart != null)
             canvas.canvas.addEventListener(
-              'touchstart',
+              "touchstart",
               canvas.onTouchStart,
-              false
+              false,
             );
           if (canvas.onTouchMove != null)
             canvas.canvas.addEventListener(
-              'touchmove',
+              "touchmove",
               canvas.onTouchMove,
-              false
+              false,
             );
           if (canvas.onTouchEnd != null)
             canvas.canvas.addEventListener(
-              'touchend',
+              "touchend",
               canvas.onTouchEnd,
-              false
+              false,
             );
         });
         document.onmouseup = handleMouseUp;
@@ -829,10 +846,10 @@
         // Add mouse wheel handler
         // Code block from "http://www.javascriptkit.com/javatutors/onmousewheel.shtml"
         var mousewheelevt = /Firefox/i.test(navigator.userAgent)
-          ? 'DOMMouseScroll'
-          : 'mousewheel';
+          ? "DOMMouseScroll"
+          : "mousewheel";
         if (document.attachEvent)
-          document.attachEvent('on' + mousewheelevt, handleMouseWheel);
+          document.attachEvent("on" + mousewheelevt, handleMouseWheel);
         else if (document.addEventListener)
           document.addEventListener(mousewheelevt, handleMouseWheel, false);
         // End code block from "http://www.javascriptkit.com/javatutors/onmousewheel.shtml"
@@ -841,14 +858,14 @@
           // Prevent context menu from showing up on right mouse button click
           // Code block from "http://stackoverflow.com/questions/8370213/block-right-clicks-in-canvas-with-webgl-context"
           canvas.canvas.addEventListener(
-            'contextmenu',
+            "contextmenu",
             function (event) {
               if (event.button === 2) {
                 event.preventDefault();
                 return false;
               }
             },
-            false
+            false,
           );
           // End code block from "http://stackoverflow.com/questions/8370213/block-right-clicks-in-canvas-with-webgl-context"
         });
@@ -857,9 +874,9 @@
 
         colormapPicker = new ColorMapPicker();
         readColorMapsFromXml(
-          'ColorMaps.xml',
+          "xml/ColorMaps.xml",
           COLOR_MAP_SIZE,
-          onColorMapsLoaded
+          onColorMapsLoaded,
         );
 
         var solidColorMaps = [];
@@ -873,112 +890,112 @@
         solidColorMaps.Black = {name: "Black", group: 'Solid', nanclr: [0.5, 0.5, 0.5], bytes: [0, 0, 0, 255]};*/
 
         solidColorMaps.Blue = {
-          name: 'Blue',
-          group: 'Solid',
+          name: "Blue",
+          group: "Solid",
           nanclr: [0.0, 0.0, 0.0],
-          bytes: [45, 81, 163, 255]
+          bytes: [45, 81, 163, 255],
         };
         solidColorMaps.LightBlue = {
-          name: 'Light Blue',
-          group: 'Solid',
+          name: "Light Blue",
+          group: "Solid",
           nanclr: [0.0, 0.0, 0.0],
-          bytes: [142, 183, 255, 255]
+          bytes: [142, 183, 255, 255],
         };
         solidColorMaps.Green = {
-          name: 'Green',
-          group: 'Solid',
+          name: "Green",
+          group: "Solid",
           nanclr: [0.0, 0.0, 0.0],
-          bytes: [17, 140, 77, 255]
+          bytes: [17, 140, 77, 255],
         };
         solidColorMaps.LightGreen = {
-          name: 'Light Green',
-          group: 'Solid',
+          name: "Light Green",
+          group: "Solid",
           nanclr: [0.0, 0.0, 0.0],
-          bytes: [150, 186, 122, 255]
+          bytes: [150, 186, 122, 255],
         };
         solidColorMaps.Purple = {
-          name: 'Purple',
-          group: 'Solid',
+          name: "Purple",
+          group: "Solid",
           nanclr: [0.0, 0.0, 0.0],
-          bytes: [86, 38, 85, 255]
+          bytes: [86, 38, 85, 255],
         };
         solidColorMaps.Pink = {
-          name: 'Pink',
-          group: 'Solid',
+          name: "Pink",
+          group: "Solid",
           nanclr: [0.0, 0.0, 0.0],
-          bytes: [206, 155, 196, 255]
+          bytes: [206, 155, 196, 255],
         };
         solidColorMaps.Yellow = {
-          name: 'Yellow',
-          group: 'Solid',
+          name: "Yellow",
+          group: "Solid",
           nanclr: [0.0, 0.0, 0.0],
-          bytes: [244, 229, 83, 255]
+          bytes: [244, 229, 83, 255],
         };
         solidColorMaps.LightYellow = {
-          name: 'Light Yellow',
-          group: 'Solid',
+          name: "Light Yellow",
+          group: "Solid",
           nanclr: [0.0, 0.0, 0.0],
-          bytes: [242, 235, 148, 255]
+          bytes: [242, 235, 148, 255],
         };
         solidColorMaps.Orange = {
-          name: 'Orange',
-          group: 'Solid',
+          name: "Orange",
+          group: "Solid",
           nanclr: [0.0, 0.0, 0.0],
-          bytes: [247, 158, 67, 255]
+          bytes: [247, 158, 67, 255],
         };
         solidColorMaps.LightOrange = {
-          name: 'Light Orange',
-          group: 'Solid',
+          name: "Light Orange",
+          group: "Solid",
           nanclr: [0.0, 0.0, 0.0],
-          bytes: [249, 187, 123, 255]
+          bytes: [249, 187, 123, 255],
         };
         solidColorMaps.Red = {
-          name: 'Red',
-          group: 'Solid',
+          name: "Red",
+          group: "Solid",
           nanclr: [0.0, 0.0, 0.0],
-          bytes: [232, 62, 36, 255]
+          bytes: [232, 62, 36, 255],
         };
         solidColorMaps.LightRed = {
-          name: 'Light Red',
-          group: 'Solid',
+          name: "Light Red",
+          group: "Solid",
           nanclr: [0.0, 0.0, 0.0],
-          bytes: [239, 127, 109, 255]
+          bytes: [239, 127, 109, 255],
         };
         solidColorMaps.Black = {
-          name: 'Black',
-          group: 'Solid',
+          name: "Black",
+          group: "Solid",
           nanclr: [0.0, 0.0, 0.0],
-          bytes: [35, 31, 32, 255]
+          bytes: [35, 31, 32, 255],
         };
         solidColorMaps.Brown = {
-          name: 'Brown',
-          group: 'Solid',
+          name: "Brown",
+          group: "Solid",
           nanclr: [0.0, 0.0, 0.0],
-          bytes: [115, 85, 32, 255]
+          bytes: [115, 85, 32, 255],
         };
         solidColorMaps.DarkGray = {
-          name: 'Dark Gray',
-          group: 'Solid',
+          name: "Dark Gray",
+          group: "Solid",
           nanclr: [0.0, 0.0, 0.0],
-          bytes: [90, 87, 82, 255]
+          bytes: [90, 87, 82, 255],
         };
         solidColorMaps.Gray = {
-          name: 'Gray',
-          group: 'Solid',
+          name: "Gray",
+          group: "Solid",
           nanclr: [0.0, 0.0, 0.0],
-          bytes: [150, 145, 137, 255]
+          bytes: [150, 145, 137, 255],
         };
         solidColorMaps.LightGray = {
-          name: 'Light Gray',
-          group: 'Solid',
+          name: "Light Gray",
+          group: "Solid",
           nanclr: [0.0, 0.0, 0.0],
-          bytes: [188, 184, 167, 255]
+          bytes: [188, 184, 167, 255],
         };
         solidColorMaps.White = {
-          name: 'White',
-          group: 'Solid',
+          name: "White",
+          group: "Solid",
           nanclr: [0.0, 0.0, 0.0],
-          bytes: [255, 255, 255, 255]
+          bytes: [255, 255, 255, 255],
         };
 
         onColorMapsLoaded(solidColorMaps);
@@ -986,9 +1003,9 @@
         // >>> Register actions
 
         actionManager.register(
-          'ImportColormaps',
+          "ImportColormaps",
           onColorMapsLoaded,
-          onColorMapsUnloaded
+          onColorMapsUnloaded,
         );
 
         /*var image = new Image();
@@ -1007,17 +1024,17 @@
 	image.src = 'debug_layer3.png';
 	image.onload = function() {
 		imageCanvas.loadImage('debug_layer3.png', image, null, true, true);
-		
+
 		image = new Image();
 		image.src = 'debug_layer2.png';
 		image.onload = function() {
 			imageCanvas.loadImage('debug_layer2.png', image, null, true, true);
-			
+
 			image = new Image();
 			image.src = 'debug_layer1.png';
 			image.onload = function() {
 				imageCanvas.loadImage('debug_layer1.png', image, null, true, true);
-				
+
 				image = new Image();
 				image.src = 'debug_layer0.png';
 				image.onload = function() {
@@ -1036,13 +1053,13 @@
         // Make colormap name unique
         var pickerChanged = false;
         for (var key in newColorMaps) {
-          if (key === '_default') colorMaps._default = newColorMaps._default;
+          if (key === "_default") colorMaps._default = newColorMaps._default;
           else {
             // Find unique key
             var uniquekey = key;
             var idx = 1;
             while (colorMaps[uniquekey] != null)
-              uniquekey = key + ' [' + ++idx + ']';
+              uniquekey = key + " [" + ++idx + "]";
 
             // Update name field of colormap
             newColorMaps[key].name = uniquekey;
@@ -1057,7 +1074,7 @@
         // Replace colormap names of embedded colormap sections with colormaps
         for (var colorMapName in newColorMaps)
           if (
-            colorMapName !== '_default' &&
+            colorMapName !== "_default" &&
             newColorMaps[colorMapName].sections
           ) {
             // If the loaded colormap contains sections and splitters
@@ -1075,7 +1092,7 @@
                   var clrstr = section.colorMap;
                   if (
                     (clrstr.length =
-                      8 && clrstr[0] === '0' && clrstr[1] === 'x')
+                      8 && clrstr[0] === "0" && clrstr[1] === "x")
                   ) {
                     var r = parseInt(clrstr.substr(2, 2), 16);
                     var g = parseInt(clrstr.substr(4, 2), 16);
@@ -1090,10 +1107,10 @@
                     ) {
                       var recreatedColormap = {
                         name: section.colorMap,
-                        group: 'Solid',
+                        group: "Solid",
                         nanclr: [0.0, 0.0, 0.0],
                         bytes: [r, g, b, 255],
-                        inPicker: false
+                        inPicker: false,
                       };
                       var recreatedColormaps = [];
                       recreatedColormaps[recreatedColormap.name] =
@@ -1119,13 +1136,13 @@
                       controlPointKey,
                       controlPoint[0],
                       controlPoint[1],
-                      controlPoint[2]
+                      controlPoint[2],
                     );
                 });
 
                 var recreatedColormap = {
                   name: section.colorMap,
-                  group: 'Recreated',
+                  group: "Recreated",
                   nanclr: colormap.nanColor,
                   bytes: colorTable.Create(COLOR_MAP_SIZE),
                   flipped: 0,
@@ -1134,7 +1151,7 @@
                   //controlPoints: colorTable.getSamples(),
                   //controlPointKeys: colorTable.getKeys(),
                   sections: null,
-                  splitters: null
+                  splitters: null,
                 };
                 var recreatedColormaps = [];
                 recreatedColormaps[recreatedColormap.name] = recreatedColormap;
@@ -1161,7 +1178,7 @@
       function onColorMapsUnloaded(unloadedColorMaps) {
         var pickerChanged = false;
         for (var key in unloadedColorMaps)
-          if (key !== '_default') {
+          if (key !== "_default") {
             var colormap = unloadedColorMaps[key];
 
             if (colormap.inPicker) pickerChanged = true;
@@ -1181,7 +1198,7 @@
       }
 
       function colorMap_onDragStart(event) {
-        event.dataTransfer.setData('ColorMapName', event.target.tag_id);
+        event.dataTransfer.setData("ColorMapName", event.target.tag_id);
         colorMapCanvas.showTrashButtons();
       }
 
@@ -1195,7 +1212,7 @@
 
         colorMap.flipped = !colorMap.flipped;
 
-        var ctx = canvas.getContext('2d');
+        var ctx = canvas.getContext("2d");
         var imgdata = ctx.getImageData(0, 0, COLOR_MAP_SIZE, 1);
         var colorMap_numpixels = Math.floor(colorMap.bytes.length / 4);
         for (var i = 0; i < colorMap_numpixels; ++i) {
@@ -1217,92 +1234,92 @@
     }*/
       function setHistogramResolution() {
         var rangeHistogramResolution = document.getElementById(
-          'rangeHistogramResolution'
+          "rangeHistogramResolution",
         );
         var lblHistogramResolution = document.getElementById(
-          'lblHistogramResolution'
+          "lblHistogramResolution",
         );
         var resolution = Math.pow(2, rangeHistogramResolution.value);
 
         //lblHistogramResolution.innerHTML = resolution;
-        rangeHistogramResolution.style.visibility = 'visible';
-        lblHistogramResolution.style.visibility = 'visible';
+        rangeHistogramResolution.style.visibility = "visible";
+        lblHistogramResolution.style.visibility = "visible";
         var histograms = imageCanvas.createHistograms(resolution);
         if (histograms.length !== 0) colorMapCanvas.updateHistogram(histograms);
       }
 
       function showColorPicker() {
-        var divColorMapPicker = document.getElementById('divColorMapPicker');
-        var divWorkArea = document.getElementById('divWorkArea');
+        var divColorMapPicker = document.getElementById("divColorMapPicker");
+        var divWorkArea = document.getElementById("divWorkArea");
 
-        divColorMapPicker.style.display = 'inline-block';
+        divColorMapPicker.style.display = "inline-block";
 
         var ColorMapPickerWidth = divColorMapPicker.offsetWidth;
-        divWorkArea.style.left = ColorMapPickerWidth + 'px';
+        divWorkArea.style.left = ColorMapPickerWidth + "px";
         divWorkArea.style.width =
-          '-moz-calc(100% - ' + divWorkArea.style.left + ')';
+          "-moz-calc(100% - " + divWorkArea.style.left + ")";
         divWorkArea.style.width =
-          '-webkit-calc(100% - ' + divWorkArea.style.left + ')';
-        divWorkArea.style.width = 'calc(100% - ' + divWorkArea.style.left + ')';
+          "-webkit-calc(100% - " + divWorkArea.style.left + ")";
+        divWorkArea.style.width = "calc(100% - " + divWorkArea.style.left + ")";
 
         onResize();
       }
 
       function hideColorPicker() {
-        var divColorMapPicker = document.getElementById('divColorMapPicker');
-        var divWorkArea = document.getElementById('divWorkArea');
+        var divColorMapPicker = document.getElementById("divColorMapPicker");
+        var divWorkArea = document.getElementById("divWorkArea");
 
-        divColorMapPicker.style.display = 'none';
+        divColorMapPicker.style.display = "none";
 
         var ColorMapPickerWidth = divColorMapPicker.offsetWidth;
-        divWorkArea.style.left = '0px';
-        divWorkArea.style.width = '100%';
+        divWorkArea.style.left = "0px";
+        divWorkArea.style.width = "100%";
 
         onResize();
       }
 
       function toggleColorPicker() {
-        var divColorMapPicker = document.getElementById('divColorMapPicker');
-        if (divColorMapPicker.style.display == 'inline-block')
+        var divColorMapPicker = document.getElementById("divColorMapPicker");
+        if (divColorMapPicker.style.display == "inline-block")
           hideColorPicker();
         else showColorPicker();
       }
 
       function setValueRange() {
-        var histogramH0 = document.getElementById('lblHistogramH0').value;
-        var histogramH10 = document.getElementById('lblHistogramH10').value;
+        var histogramH0 = document.getElementById("lblHistogramH0").value;
+        var histogramH10 = document.getElementById("lblHistogramH10").value;
         colorMapCanvas.setValueRange(histogramH0, histogramH10);
       }
 
       function onHistogramButtonPressed() {
-        document.getElementById('cmdHistogram').style.display = 'none';
-        document.getElementById('cmdAlpha').style.display = 'inline-block';
-        document.getElementById('cmdHistogramAlpha').style.display = 'none';
+        document.getElementById("cmdHistogram").style.display = "none";
+        document.getElementById("cmdAlpha").style.display = "inline-block";
+        document.getElementById("cmdHistogramAlpha").style.display = "none";
         colorMapCanvas.hideHistogram();
         colorMapCanvas.showAlphaCurve();
       }
 
       function onAlphaButtonPressed() {
-        document.getElementById('cmdHistogram').style.display = 'none';
-        document.getElementById('cmdAlpha').style.display = 'none';
-        document.getElementById('cmdHistogramAlpha').style.display =
-          'inline-block';
+        document.getElementById("cmdHistogram").style.display = "none";
+        document.getElementById("cmdAlpha").style.display = "none";
+        document.getElementById("cmdHistogramAlpha").style.display =
+          "inline-block";
         colorMapCanvas.showHistogram();
         colorMapCanvas.showAlphaCurve();
       }
 
       function onHistogramAlphaButtonPressed() {
-        document.getElementById('cmdHistogram').style.display = 'inline-block';
-        document.getElementById('cmdAlpha').style.display = 'none';
-        document.getElementById('cmdHistogramAlpha').style.display = 'none';
+        document.getElementById("cmdHistogram").style.display = "inline-block";
+        document.getElementById("cmdAlpha").style.display = "none";
+        document.getElementById("cmdHistogramAlpha").style.display = "none";
         colorMapCanvas.showHistogram();
         colorMapCanvas.hideAlphaCurve();
       }
 
       function onResize() {
-        var ImageSection = document.getElementById('ImageSection');
-        var ColorMapSection = document.getElementById('ColorMapSection');
-        var divColorMapPicker = document.getElementById('divColorMapPicker');
+        var ImageSection = document.getElementById("ImageSection");
+        var ColorMapSection = document.getElementById("ColorMapSection");
+        var divColorMapPicker = document.getElementById("divColorMapPicker");
 
         //var cmHeight = window.innerHeight > 2 * HISTOGRAM_SIZE ? HISTOGRAM_SIZE : Math.floor(window.innerHeight / 2);
 
@@ -1329,17 +1346,17 @@
         var y = 0;
         var h = cmHeight - 12;
         var rangeHistogramResolution = document.getElementById(
-          'rangeHistogramResolution'
+          "rangeHistogramResolution",
         );
         if (h > 16) {
           rangeHistogramResolution.style.top = y;
           rangeHistogramResolution.style.height = h;
           rangeHistogramResolution.style.visibility =
             lblHistogramResolution.style.visibility;
-        } else rangeHistogramResolution.style.visibility = 'hidden';
+        } else rangeHistogramResolution.style.visibility = "hidden";
 
         cvAll.forEach(function (canvas) {
-          if (typeof canvas.onResize == 'function') canvas.onResize();
+          if (typeof canvas.onResize == "function") canvas.onResize();
         });
       }
       onResize();
@@ -1372,11 +1389,11 @@
           var eventY = event.clientY - targetRect.top;
           var fileExt = files[0].name;
           if (fileExt != null) {
-            var lastdot = fileExt.lastIndexOf('.');
+            var lastdot = fileExt.lastIndexOf(".");
             if (lastdot != -1) fileExt = fileExt.substring(lastdot + 1);
             else fileExt = null;
           }
-          if (fileExt == 'im') {
+          if (fileExt == "im") {
             var reader = new FileReader();
             reader.onload = function (e) {
               var image = readImImage(new Uint8Array(reader.result));
@@ -1387,14 +1404,14 @@
                 image.width,
                 image.height,
                 view,
-                fileDropIsCopy
+                fileDropIsCopy,
               );
               setHistogramResolution();
-              colorMapCanvas.setValueRange(image.vmin, image.vmax, '');
+              colorMapCanvas.setValueRange(image.vmin, image.vmax, "");
             };
             reader.readAsArrayBuffer(files[0]);
           }
-          if (fileExt == 'fits') {
+          if (fileExt == "fits") {
             /*var fits = new astro.FITS(files[0], function() {
                     	var dataunit = this.getDataUnit();
                     	console.log("width = " + dataunit.width);
@@ -1432,10 +1449,10 @@
                   width,
                   height,
                   view,
-                  fileDropIsCopy
+                  fileDropIsCopy,
                 );
                 setHistogramResolution();
-                colorMapCanvas.setValueRange(vmin, vmax, '');
+                colorMapCanvas.setValueRange(vmin, vmax, "");
               },
               function (floats, width, height, vmin, vmax) {
                 var view = imageCanvas.getOrCreateView(eventX, eventY);
@@ -1445,11 +1462,11 @@
                   width,
                   height,
                   view,
-                  fileDropIsCopy
+                  fileDropIsCopy,
                 );
                 setHistogramResolution();
-                colorMapCanvas.setValueRange(vmin, vmax, '');
-              }
+                colorMapCanvas.setValueRange(vmin, vmax, "");
+              },
             );
           } // Default extension: png
           else {
@@ -1463,7 +1480,7 @@
                   files[0].name,
                   image,
                   view,
-                  fileDropIsCopy
+                  fileDropIsCopy,
                 );
                 setHistogramResolution();
               };
@@ -1484,15 +1501,15 @@
                 if (minValue != null && maxValue != null) {
                   //var suffix = (minValue.endsWith('%') && maxValue.endsWith('%')) ? '%' : '';
                   var suffix = minValue.substring(
-                    ('' + parseFloat(minValue)).length
+                    ("" + parseFloat(minValue)).length,
                   );
                   colorMapCanvas.setValueRange(
                     parseFloat(minValue),
                     parseFloat(maxValue),
-                    suffix
+                    suffix,
                   );
-                } else colorMapCanvas.setValueRange(0, 100, '%'); // Default to (0%; 100%)
-              } else colorMapCanvas.setValueRange(0, 100, '%'); // Default to (0%; 100%)
+                } else colorMapCanvas.setValueRange(0, 100, "%"); // Default to (0%; 100%)
+              } else colorMapCanvas.setValueRange(0, 100, "%"); // Default to (0%; 100%)
             };
             reader.readAsArrayBuffer(files[0]);
           }
@@ -1511,8 +1528,8 @@
                 this.result,
                 COLOR_MAP_SIZE,
                 function (newcolormaps) {
-                  actionManager.perform('ImportColormaps', newcolormaps);
-                }
+                  actionManager.perform("ImportColormaps", newcolormaps);
+                },
               );
             };
             reader.readAsDataURL(files[i]);
@@ -1520,7 +1537,7 @@
       }
 
       var ctrlPressed = false;
-      var CTRL = navigator.appVersion.indexOf('Mac') == -1 ? 17 : 224;
+      var CTRL = navigator.appVersion.indexOf("Mac") == -1 ? 17 : 224;
 
       function handleKeyDown(event) {
         if (event.keyCode === CTRL) ctrlPressed = true;
@@ -1559,31 +1576,31 @@
       }
 
       function saveColormap() {
-        downloadColormapDialog.dialog('open');
+        downloadColormapDialog.dialog("open");
       }
 
       function saveColormapXML() {
         var cm = colorMapCanvas.serializeColorMap(new ColormapXmlSerializer());
         //console.log(cm);
-        downloader.href = 'data:application/xml;charset=utf-8,' + cm;
-        downloader.download = 'colormap.xml';
+        downloader.href = "data:application/xml;charset=utf-8," + cm;
+        downloader.download = "colormap.xml";
         downloader.click();
       }
 
       function saveColormapJSON() {
         var cm = colorMapCanvas.serializeColorMap(new ColormapJsonSerializer());
         //console.log(cm);
-        downloader.href = 'data:application/json;charset=utf-8,' + cm;
-        downloader.download = 'colormap.json';
+        downloader.href = "data:application/json;charset=utf-8," + cm;
+        downloader.download = "colormap.json";
         downloader.click();
       }
 
       function saveColormapPNG() {
         var cm = colorMapCanvas.serializeColorMap(
-          new ColormapPngSerializer(1024, 32)
+          new ColormapPngSerializer(1024, 32),
         );
         downloader.href = cm;
-        downloader.download = 'colormap.png';
+        downloader.download = "colormap.png";
         downloader.click();
       }
 
@@ -1600,7 +1617,7 @@
           images.forEach(function (image) {
             // Convert base64-dataURL to base64
             image.dataURL = image.dataURL.substr(
-              image.dataURL.indexOf('base64,') + 'base64,'.length
+              image.dataURL.indexOf("base64,") + "base64,".length,
             );
 
             // Rename duplicate files
@@ -1608,29 +1625,29 @@
             if (Number.isNaN(filenameCount)) filenameCounter[image.name] = 1;
             else
               image.name =
-                image.name.substr(0, image.name.length - '.png'.length) +
-                ' (' +
+                image.name.substr(0, image.name.length - ".png".length) +
+                " (" +
                 filenameCount +
-                ').png';
+                ").png";
 
             zip.file(image.name, image.dataURL, {
-              base64: true
+              base64: true,
             });
           });
           zip
             .generateAsync({
-              type: 'base64'
+              type: "base64",
             })
             .then(function (base64) {
-              downloader.href = 'data:application/zip;base64,' + base64;
-              downloader.download = 'images.zip';
+              downloader.href = "data:application/zip;base64," + base64;
+              downloader.download = "images.zip";
               downloader.click();
             });
         }
       }
 
-      var ofd = document.getElementById('ofd');
-      if (ofd !== null) ofd.addEventListener('change', handleFileSelect, false);
+      var ofd = document.getElementById("ofd");
+      if (ofd !== null) ofd.addEventListener("change", handleFileSelect, false);
     </script>
   </body>
 </html>
