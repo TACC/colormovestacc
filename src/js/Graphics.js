@@ -16,13 +16,6 @@ var MAX_NUM_SECTIONS = 15;
 function initShader(gl, vsname, fsname) {
 	vertexShader = getShader(gl, vsname);
 	fragmentShader = getShader(gl, fsname);
-	// var vertexShader = getShader(gl, vsname, "vertex");
-	// var fragmentShader = getShader(gl, fsname, "fragment");
-
-	// if (!vertexShader || !fragmentShader) {
-    //     console.error("Failed to create shaders: " + vsname + ", " + fsname);
-    //     return null;
-    // }
 
 	var sdr = gl.createProgram();
 	gl.attachShader(sdr, vertexShader);
@@ -31,7 +24,6 @@ function initShader(gl, vsname, fsname) {
 
 	if (!gl.getProgramParameter(sdr, gl.LINK_STATUS)) {
 		alert(gl.getProgramInfoLog(sdr));
-		// console.error("Shader link error: " + gl.getProgramInfoLog(sdr));
 		return null;
 	}
 
@@ -117,36 +109,6 @@ function getShader(gl, id) {
 
 	return shader;
 }
-
-// TESTING
-// function getShader(gl, name, type) {
-//     var src = window[name];
-//     if (!src) {
-//         console.error("Shader source not found for: " + name);
-//         return null;
-//     }
-
-//     var shaderType;
-//     if (type === "fragment") {
-//         shaderType = gl.FRAGMENT_SHADER;
-//     } else if (type === "vertex") {
-//         shaderType = gl.VERTEX_SHADER;
-//     } else {
-//         console.error("Invalid shader type: " + type);
-//         return null;
-//     }
-
-//     var shader = gl.createShader(shaderType);
-//     gl.shaderSource(shader, src);
-//     gl.compileShader(shader);
-
-//     if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-//         console.error("Shader compile error in " + name + ": " + gl.getShaderInfoLog(shader));
-//         return null;
-//     }
-
-//     return shader;
-// }
 
 // >>> Section: Textures
 
@@ -466,43 +428,6 @@ function webGLStart(canvas) {
 	
 	return gl;
 }
-
-/*function setColorMap(gl, sdr, sections, getSectionTexture) {
-	if(sections == null || sections.length == 0)
-		return;
-	
-	gl.useProgram(sdr);
-	
-	var idxArray = new Array(sections.length);
-	var sectionStartArray = new Array(sections.length);
-	var sectionEndArray = new Array(sections.length);
-	var sectionStartValueArray = new Array(sections.length);
-	var sectionEndValueArray = new Array(sections.length);
-	var sectionFlippedArray = new Array(sections.length);
-	var sectionStartAlphaArray = new Array(sections.length);
-	var sectionEndAlphaArray = new Array(sections.length);
-	for(var i = 0; i < sections.length; i++)
-	{
-		gl.activeTexture(gl.TEXTURE0 + (i + 1));
-		gl.bindTexture(gl.TEXTURE_2D, getSectionTexture(sections[i]));
-		idxArray[i] = i + 1;
-		sectionStartArray[i] = sections[i].start.pos;
-		sectionEndArray[i] = sections[i].end.pos;
-		sectionStartValueArray[i] = sections[i].startValue;
-		sectionEndValueArray[i] = sections[i].endValue;
-		sectionFlippedArray[i] = sections[i].flipped;
-		sectionStartAlphaArray[i] = sections[i].startAlpha;
-		sectionEndAlphaArray[i] = sections[i].endAlpha;
-	}
-	gl.uniform1iv(gl.getUniformLocation(sdr, "colorMap"), idxArray);
-	gl.uniform1fv(gl.getUniformLocation(sdr, "colorMapStart"), sectionStartArray);
-	gl.uniform1fv(gl.getUniformLocation(sdr, "colorMapEnd"), sectionEndArray);
-	gl.uniform1fv(gl.getUniformLocation(sdr, "colorMapStartValue"), sectionStartValueArray);
-	gl.uniform1fv(gl.getUniformLocation(sdr, "colorMapEndValue"), sectionEndValueArray);
-	gl.uniform1iv(gl.getUniformLocation(sdr, "colorMapFlipped"), sectionFlippedArray);
-	gl.uniform1fv(gl.getUniformLocation(sdr, "colorMapStartAlpha"), sectionStartAlphaArray);
-	gl.uniform1fv(gl.getUniformLocation(sdr, "colorMapEndAlpha"), sectionEndAlphaArray);
-}*/
 
 function setColorMap(gl, sdr, sections, getSectionTexture) {
 	if(sections == null || sections.length == 0)
