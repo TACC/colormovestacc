@@ -17,6 +17,15 @@ function initShader(gl, vsname, fsname) {
 	vertexShader = getShader(gl, vsname);
 	fragmentShader = getShader(gl, fsname);
 
+	// wherever you passed the shader source, e.g.:
+	gl.shaderSource(vertexShader, vsSimple);
+	gl.shaderSource(vertexShader, vsAlpha);
+	gl.shaderSource(fragmentShader, fsSimple);
+	gl.shaderSource(fragmentShader, fsLine);
+	gl.shaderSource(fragmentShader, fsHighlight);
+	gl.shaderSource(fragmentShader, fsColorMapping);
+	gl.shaderSource(fragmentShader, fsColorMap);
+
 	var sdr = gl.createProgram();
 	gl.attachShader(sdr, vertexShader);
 	gl.attachShader(sdr, fragmentShader);
