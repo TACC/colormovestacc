@@ -14,15 +14,15 @@ var MAX_NUM_SECTIONS = 15;
 // >>> Section: Shaders
 
 function initShader(gl, vsname, fsname) {
-	// vertexShader = getShader(gl, vsname);
-	// fragmentShader = getShader(gl, fsname);
-	var vertexShader = getShader(gl, vsname, "vertex");
-	var fragmentShader = getShader(gl, fsname, "fragment");
+	vertexShader = getShader(gl, vsname);
+	fragmentShader = getShader(gl, fsname);
+	// var vertexShader = getShader(gl, vsname, "vertex");
+	// var fragmentShader = getShader(gl, fsname, "fragment");
 
-	if (!vertexShader || !fragmentShader) {
-        console.error("Failed to create shaders: " + vsname + ", " + fsname);
-        return null;
-    }
+	// if (!vertexShader || !fragmentShader) {
+    //     console.error("Failed to create shaders: " + vsname + ", " + fsname);
+    //     return null;
+    // }
 
 	var sdr = gl.createProgram();
 	gl.attachShader(sdr, vertexShader);
@@ -30,8 +30,8 @@ function initShader(gl, vsname, fsname) {
 	gl.linkProgram(sdr);
 
 	if (!gl.getProgramParameter(sdr, gl.LINK_STATUS)) {
-		// alert(gl.getProgramInfoLog(sdr));
-		console.error("Shader link error: " + gl.getProgramInfoLog(sdr));
+		alert(gl.getProgramInfoLog(sdr));
+		// console.error("Shader link error: " + gl.getProgramInfoLog(sdr));
 		return null;
 	}
 
@@ -83,70 +83,70 @@ function initShader(gl, vsname, fsname) {
 	return sdr
 }
 
-// function getShader(gl, id) {
-// 	var shaderScript = document.getElementById(id);
-// 	if (!shaderScript) {
-// 		return null;
-// 	}
+function getShader(gl, id) {
+	var shaderScript = document.getElementById(id);
+	if (!shaderScript) {
+		return null;
+	}
 
-// 	var str = "";
-// 	var k = shaderScript.firstChild;
-// 	while (k) {
-// 		if (k.nodeType == 3) {
-// 			str += k.textContent;
-// 		}
-// 		k = k.nextSibling;
-// 	}
+	var str = "";
+	var k = shaderScript.firstChild;
+	while (k) {
+		if (k.nodeType == 3) {
+			str += k.textContent;
+		}
+		k = k.nextSibling;
+	}
 
-// 	var shader;
-// 	if (shaderScript.type == "x-shader/x-fragment") {
-// 		shader = gl.createShader(gl.FRAGMENT_SHADER);
-// 	} else if (shaderScript.type == "x-shader/x-vertex") {
-// 		shader = gl.createShader(gl.VERTEX_SHADER);
-// 	} else {
-// 		return null;
-// 	}
+	var shader;
+	if (shaderScript.type == "x-shader/x-fragment") {
+		shader = gl.createShader(gl.FRAGMENT_SHADER);
+	} else if (shaderScript.type == "x-shader/x-vertex") {
+		shader = gl.createShader(gl.VERTEX_SHADER);
+	} else {
+		return null;
+	}
 
-// 	gl.shaderSource(shader, str);
-// 	gl.compileShader(shader);
+	gl.shaderSource(shader, str);
+	gl.compileShader(shader);
 
-// 	if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-// 		alert(gl.getShaderInfoLog(shader));
-// 		return null;
-// 	}
+	if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+		alert(gl.getShaderInfoLog(shader));
+		return null;
+	}
 
-// 	return shader;
-// }
+	return shader;
+}
 
 // TESTING
-function getShader(gl, name, type) {
-    var src = window[name];
-    if (!src) {
-        console.error("Shader source not found for: " + name);
-        return null;
-    }
+// function getShader(gl, name, type) {
+//     var src = window[name];
+//     if (!src) {
+//         console.error("Shader source not found for: " + name);
+//         return null;
+//     }
 
-    var shaderType;
-    if (type === "fragment") {
-        shaderType = gl.FRAGMENT_SHADER;
-    } else if (type === "vertex") {
-        shaderType = gl.VERTEX_SHADER;
-    } else {
-        console.error("Invalid shader type: " + type);
-        return null;
-    }
+//     var shaderType;
+//     if (type === "fragment") {
+//         shaderType = gl.FRAGMENT_SHADER;
+//     } else if (type === "vertex") {
+//         shaderType = gl.VERTEX_SHADER;
+//     } else {
+//         console.error("Invalid shader type: " + type);
+//         return null;
+//     }
 
-    var shader = gl.createShader(shaderType);
-    gl.shaderSource(shader, src);
-    gl.compileShader(shader);
+//     var shader = gl.createShader(shaderType);
+//     gl.shaderSource(shader, src);
+//     gl.compileShader(shader);
 
-    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        console.error("Shader compile error in " + name + ": " + gl.getShaderInfoLog(shader));
-        return null;
-    }
+//     if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+//         console.error("Shader compile error in " + name + ": " + gl.getShaderInfoLog(shader));
+//         return null;
+//     }
 
-    return shader;
-}
+//     return shader;
+// }
 
 // >>> Section: Textures
 

@@ -47,13 +47,13 @@
     </script>-->
     <!-- Shaders loaded directly ads variables -->
     <!-- Load shaders first, synchronously, as plain scripts -->
-    <script src="./shaders/vsSimple.js"></script>
+    {% comment %} <script src="./shaders/vsSimple.js"></script>
     <script src="./shaders/vsAlpha.js"></script>
     <script src="./shaders/fsSimple.js"></script>
     <script src="./shaders/fsLine.js"></script>
     <script src="./shaders/fsHighlight.js"></script>
     <script src="./shaders/fsColorMapping.js"></script>
-    <script src="./shaders/fsColorMap.js"></script>
+    <script src="./shaders/fsColorMap.js"></script> {% endcomment %}
     <!-- Custom Packages -->
     <script type="text/javascript" src="js/Utility.js"></script>
     <script type="text/javascript" src="js/PngChunkReader.js"></script>
@@ -70,7 +70,7 @@
 
     <!-- >>> Shaders -->
 
-    <!--<script id="vsSimple" type="x-shader/x-vertex">
+    <script id="vsSimple" type="x-shader/x-vertex">
       attribute vec3 vpos;
       attribute vec2 vtexcoord;
       uniform mat4 matWorldViewProj;
@@ -81,9 +81,9 @@
       	gl_Position = matWorldViewProj * vec4(vpos, 1.0);
       	uv = vtexcoord;
       }
-    </script>-->
+    </script>
 
-    <!--<script id="vsAlpha" type="x-shader/x-vertex">
+    <script id="vsAlpha" type="x-shader/x-vertex">
         precision mediump float;
       precision mediump int;
       uniform float colorMapStart[15], colorMapEnd[15];
@@ -116,9 +116,9 @@
       	else
       		gl_Position = matWorldViewProj * vec4(vpos, 1.0);
       }
-    </script>-->
+    </script>
 
-    <!--<script id="fsSimple" type="x-shader/x-fragment">
+    <script id="fsSimple" type="x-shader/x-fragment">
         precision mediump float;
       varying vec2 uv;
       uniform sampler2D uSampler;
@@ -127,9 +127,9 @@
       {
       	gl_FragColor = texture2D(uSampler, uv);
       }
-    </script>-->
+    </script>
 
-    <!--<script id="fsLine" type="x-shader/x-fragment">
+    <script id="fsLine" type="x-shader/x-fragment">
         precision mediump float;
       uniform vec4 color;
 
@@ -137,9 +137,9 @@
       {
       	gl_FragColor = color;
       }
-    </script>-->
+    </script>
 
-    <!--<script id="fsHighlight" type="x-shader/x-fragment">
+    <script id="fsHighlight" type="x-shader/x-fragment">
         precision mediump float;
       varying vec2 uv;
 
@@ -147,9 +147,9 @@
       {
       	gl_FragColor = vec4(1.0, 0.0, 0.0, 0.4 + 0.2 * uv.x * uv.y);
       }
-    </script>-->
+    </script>
 
-    <!--<script id="fsColorMapping" type="x-shader/x-fragment">
+    <script id="fsColorMapping" type="x-shader/x-fragment">
         precision mediump float;
       	precision mediump int;
       	uniform float colorMapStart[15], colorMapEnd[15];
@@ -356,9 +356,9 @@
       			gl_FragColor = vec4(texture2D(colorMap[14], vec2(v, 0.5)).rgb + vec3(-h, h, -h), a + h);
       		}
       	}
-    </script>-->
+    </script>
 
-    <!--<script id="fsColorMap" type="x-shader/x-fragment">
+    <script id="fsColorMap" type="x-shader/x-fragment">
         precision mediump float;
       varying vec2 uv;
       uniform sampler2D colorMap[15];
@@ -485,7 +485,7 @@
       		gl_FragColor = vec4(texture2D(colorMap[14], vec2(v, 0.5)).rgb, 1.0);
       	}
       }
-    </script>-->
+    </script>
     <script src="js/client.js" defer></script>
   </head>
 
