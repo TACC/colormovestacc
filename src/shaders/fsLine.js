@@ -1,4 +1,5 @@
-export const fsLine = `
+//export
+const fsLine = `
 precision mediump float;
     uniform vec4 color;
 

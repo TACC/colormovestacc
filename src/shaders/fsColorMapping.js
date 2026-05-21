@@ -1,4 +1,5 @@
-export const fsColorMapping = `
+//export
+const fsColorMapping = `
     precision mediump float;
     precision mediump int;
     uniform float colorMapStart[15], colorMapEnd[15];

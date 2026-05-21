@@ -1,4 +1,5 @@
-export const vsSimple = `
+//export
+const vsSimple = `
     attribute vec3 vpos;
     attribute vec2 vtexcoord;
     uniform mat4 matWorldViewProj;

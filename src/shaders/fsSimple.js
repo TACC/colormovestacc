@@ -1,4 +1,5 @@
-export const fsSimple = `
+//export
+const fsSimple = `
     precision mediump float;
     varying vec2 uv;
     uniform sampler2D uSampler;

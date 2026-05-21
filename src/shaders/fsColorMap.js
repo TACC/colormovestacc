@@ -1,4 +1,5 @@
-export const fsColorMap = `
+//export
+const fsColorMap = `
     precision mediump float;
     varying vec2 uv;
     uniform sampler2D colorMap[15];

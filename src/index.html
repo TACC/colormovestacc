@@ -17,19 +17,8 @@
     <script type="text/javascript" src="lib/webgl-utils.js"></script>
     <script type="text/javascript" src="lib/fits.js"></script>
     <script type="text/javascript" src="lib/jszip.min.js"></script>
-    <!-- Custom Packages -->
-    <script type="text/javascript" src="js/Utility.js"></script>
-    <script type="text/javascript" src="js/PngChunkReader.js"></script>
-    <script type="text/javascript" src="js/ImageReader.js"></script>
-    <script type="text/javascript" src="js/ColormapReader.js"></script>
-    <script type="text/javascript" src="js/Viewer.js"></script>
-    <script type="text/javascript" src="js/ImageCanvas.js"></script>
-    <script type="text/javascript" src="js/ColorMapCanvas.js"></script>
-    <script type="text/javascript" src="js/ColorMapPicker.js"></script>
-    <script type="text/javascript" src="js/ActionManager.js"></script>
-    <script type="text/javascript" src="js/ColorMapCreator.js"></script>
-    <!-- Shaders Refactored -->
-    <script type="module">
+    <!-- Custom Shaders Refactored -->
+    <!--<script type="module">
       import { vsSimple } from './shaders/vsSimple.js';
       import { vsAlpha } from './shaders/vsAlpha.js';
       import { fsSimple } from './shaders/fsSimple.js';
@@ -48,14 +37,34 @@
       //gl.shaderSource(fragmentShader, fsColorMap);
 
       // global scope.
-      window.vsSimple = vsSimple;
-      window.vsAlpha = vsAlpha;
-      window.fsSimple = fsSimple;
-      window.fsLine = fsLine;
-      window.fsHighlight = fsHighlight;
-      window.fsColorMapping = fsColorMapping;
-      window.fsColorMap = fsColorMap;
-    </script>
+      //window.vsSimple = vsSimple;
+      //window.vsAlpha = vsAlpha;
+      //window.fsSimple = fsSimple;
+      //window.fsLine = fsLine;
+      //window.fsHighlight = fsHighlight;
+      //window.fsColorMapping = fsColorMapping;
+      //window.fsColorMap = fsColorMap;
+    </script>-->
+    <!-- Shaders loaded directly ads variables -->
+    <!-- Load shaders first, synchronously, as plain scripts -->
+    <script src="./shaders/vsSimple.js"></script>
+    <script src="./shaders/vsAlpha.js"></script>
+    <script src="./shaders/fsSimple.js"></script>
+    <script src="./shaders/fsLine.js"></script>
+    <script src="./shaders/fsHighlight.js"></script>
+    <script src="./shaders/fsColorMapping.js"></script>
+    <script src="./shaders/fsColorMap.js"></script>
+    <!-- Custom Packages -->
+    <script type="text/javascript" src="js/Utility.js"></script>
+    <script type="text/javascript" src="js/PngChunkReader.js"></script>
+    <script type="text/javascript" src="js/ImageReader.js"></script>
+    <script type="text/javascript" src="js/ColormapReader.js"></script>
+    <script type="text/javascript" src="js/Viewer.js"></script>
+    <script type="text/javascript" src="js/ImageCanvas.js"></script>
+    <script type="text/javascript" src="js/ColorMapCanvas.js"></script>
+    <script type="text/javascript" src="js/ColorMapPicker.js"></script>
+    <script type="text/javascript" src="js/ActionManager.js"></script>
+    <script type="text/javascript" src="js/ColorMapCreator.js"></script>
     <script type="text/javascript" src="js/Graphics.js"></script>
     <script type="text/javascript" src="js/Input.js"></script>
 

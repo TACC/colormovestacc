@@ -1,4 +1,5 @@
-export const vsAlpha = `
+//export
+const vsAlpha = `
     precision mediump float;
     precision mediump int;
     uniform float colorMapStart[15], colorMapEnd[15];

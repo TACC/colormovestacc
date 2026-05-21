@@ -1,4 +1,5 @@
-export const fsHighlight = `
+//export
+const fsHighlight = `
     precision mediump float;
     varying vec2 uv;
 
