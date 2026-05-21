@@ -33,11 +33,21 @@
     <!-- Shaders Refactored -->
     <script type="module">
       import { vsSimple } from './shaders/vsSimple.js';
+      import { vsAlpha } from './shaders/vsAlpha.js';
+      import { fsSimple } from './shaders/fsSimple.js';
+      import { fsLine } from './shaders/fsLine.js';
+      import { fsHighlight } from './shaders/fsHighlight.js';
 
       // wherever you passed the shader source, e.g.:
       gl.shaderSource(vertexShader, vsSimple);
+      gl.shaderSource(vertexShader, vsAlpha);
+      gl.shaderSource(fragmentShader, fsSimple);
+      gl.shaderSource(fragmentShader, fsLine);
+      gl.shaderSource(fragmentShader, fsHighlight);
     </script>
+
     <!-- >>> Shaders -->
+
     <!--<script id="vsSimple" type="x-shader/x-vertex">
       attribute vec3 vpos;
       attribute vec2 vtexcoord;
@@ -50,7 +60,8 @@
       	uv = vtexcoord;
       }
     </script>-->
-    <script id="vsAlpha" type="x-shader/x-vertex">
+
+    <!--<script id="vsAlpha" type="x-shader/x-vertex">
         precision mediump float;
       precision mediump int;
       uniform float colorMapStart[15], colorMapEnd[15];
@@ -83,8 +94,9 @@
       	else
       		gl_Position = matWorldViewProj * vec4(vpos, 1.0);
       }
-    </script>
-    <script id="fsSimple" type="x-shader/x-fragment">
+    </script>-->
+
+    <!--<script id="fsSimple" type="x-shader/x-fragment">
         precision mediump float;
       varying vec2 uv;
       uniform sampler2D uSampler;
@@ -93,8 +105,9 @@
       {
       	gl_FragColor = texture2D(uSampler, uv);
       }
-    </script>
-    <script id="fsLine" type="x-shader/x-fragment">
+    </script>-->
+
+    <!--<script id="fsLine" type="x-shader/x-fragment">
         precision mediump float;
       uniform vec4 color;
 
@@ -102,8 +115,9 @@
       {
       	gl_FragColor = color;
       }
-    </script>
-    <script id="fsHighlight" type="x-shader/x-fragment">
+    </script>-->
+
+    <!--<script id="fsHighlight" type="x-shader/x-fragment">
         precision mediump float;
       varying vec2 uv;
 
@@ -111,7 +125,8 @@
       {
       	gl_FragColor = vec4(1.0, 0.0, 0.0, 0.4 + 0.2 * uv.x * uv.y);
       }
-    </script>
+    </script>-->
+
     <script id="fsColorMapping" type="x-shader/x-fragment">
         precision mediump float;
       	precision mediump int;
@@ -320,6 +335,7 @@
       		}
       	}
     </script>
+
     <script id="fsColorMap" type="x-shader/x-fragment">
         precision mediump float;
       varying vec2 uv;
@@ -448,6 +464,7 @@
       	}
       }
     </script>
+
   </head>
 
   <body onload="onLoad()" onresize="onResize()">
