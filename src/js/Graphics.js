@@ -1,7 +1,4 @@
-
-
 // >>> Section: Global variables and globals
-
 
 var mattrans = mat4.create(); // General purpose world-view-projection matrix
 var matviewproj = mat4.create(); // General purpose view-projection matrix
@@ -10,13 +7,13 @@ var matworld = mat4.create(), matworld2 = mat4.create(); // General purpose worl
 var mattexcoordtrans = mat3.create(); // General purpose texture coordinate transformation matrix
 var mattemp = mat4.create(); // General purpose temporary matrix (Do not use across function boundaries)
 var mat3temp = mat3.create(); // General purpose temporary 3x3 matrix
-
+var fntNumeric, fntScore, fntDefault;
+var COLOR_MAP_NAMES = ["8_30T1", "8_31f", "9_17e", "15b2Asy", "62c", "CIELAB", "debug", "Fav6", "gray5", "grays4_25", "GrGold", "upuFinal", "W5", "yel15"];
+var MAX_NUM_SECTIONS = 15;
 
 // >>> Section: Shaders
 
-
-function initShader(gl, vsname, fsname)
-{
+function initShader(gl, vsname, fsname) {
 	vertexShader = getShader(gl, vsname);
 	fragmentShader = getShader(gl, fsname);
 
@@ -77,6 +74,7 @@ function initShader(gl, vsname, fsname)
 	sdr.IMPRINT_DECAY_Uniform = gl.getUniformLocation(sdr, "IMPRINT_DECAY");
 	return sdr
 }
+
 function getShader(gl, id) {
 	var shaderScript = document.getElementById(id);
 	if (!shaderScript) {
@@ -112,13 +110,9 @@ function getShader(gl, id) {
 	return shader;
 }
 
-
 // >>> Section: Textures
 
-
-var COLOR_MAP_NAMES = ["8_30T1", "8_31f", "9_17e", "15b2Asy", "62c", "CIELAB", "debug", "Fav6", "gray5", "grays4_25", "GrGold", "upuFinal", "W5", "yel15"];
-function LoadColorMaps(gl, onload)
-{
+function LoadColorMaps(gl, onload) {
 	var texColorTable = new Array(COLOR_MAP_NAMES.Length);
 	var i = 0;
 	COLOR_MAP_NAMES.forEach(function(colorMapName) {
@@ -126,8 +120,8 @@ function LoadColorMaps(gl, onload)
 	});
 	return texColorTable;
 }
-function handleLoadedTexture(gl, texture, onload)
-{
+
+function handleLoadedTexture(gl, texture, onload) {
 	gl.bindTexture(gl.TEXTURE_2D, texture);
 	gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
 	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, texture.image);
@@ -140,23 +134,23 @@ function handleLoadedTexture(gl, texture, onload)
 	if(typeof(onload) == 'function')
 		onload(texture);
 }
-function LoadTexture(gl, filename, onload)
-{
+
+function LoadTexture(gl, filename, onload) {
 	var texture = gl.createTexture();
 	texture.image = new Image();
 	texture.image.onload = function() {handleLoadedTexture(gl, texture, onload)}
 	texture.image.src = filename;
 	return texture;
 }
-function LoadTextureFromImage(gl, image)
-{
+
+function LoadTextureFromImage(gl, image) {
 	var texture = gl.createTexture();
 	texture.image = image;
 	handleLoadedTexture(gl, texture, null);
 	return texture;
 }
-function LoadTextureFromByteArray(gl, array, width, height)
-{
+
+function LoadTextureFromByteArray(gl, array, width, height) {
 	var texture = gl.createTexture();
 	texture.byteArray = array;
 	gl.bindTexture(gl.TEXTURE_2D, texture);
@@ -169,10 +163,9 @@ function LoadTextureFromByteArray(gl, array, width, height)
 	gl.bindTexture(gl.TEXTURE_2D, null);
 	return texture;
 }
-function LoadTextureFromFloatArray(gl, array, width, height)
-{
-	if (gl.getExtension('OES_texture_float') === null)
-	{
+
+function LoadTextureFromFloatArray(gl, array, width, height) {
+	if (gl.getExtension('OES_texture_float') === null) {
 		assert("This browser doesn't support floatingpoint textures");
 		return null;
 	}
@@ -189,38 +182,32 @@ function LoadTextureFromFloatArray(gl, array, width, height)
 	return texture;
 }
 
-
 // >>> Section: Fonts
 
-
-var fntNumeric, fntScore, fntDefault;
-function initFonts(gl)
-{
+function initFonts(gl) {
 	/*fntNumeric = new GlNumberFont(gl, "fntNumeric.png", SCORE_FONT_DEF, true);
 	fntScore = new GlNumberFont(gl, "fntScore.png", SCORE_FONT_DEF, true);
 	fntDefault = new GlTextFont(gl, "fntDefault.png", DEFAULT_FONT_SIZE);*/
 }
 
-
 // >>> Section: Meshes
 
-
-function Mesh(_gl, positions, normals, tangents, binormals, texcoords, indices, _primitivetype)
-{
+function Mesh(_gl, positions, normals, tangents, binormals, texcoords, indices, _primitivetype) {
 	var gl = _gl;
 	var posbuffer, nmlbuffer, tgtbuffer, bnmbuffer, texcoordbuffer, idxbuffer;
 	var primitivetype, numvertices, numindices;
 
-	this.reset = function(positions, normals, tangents, binormals, texcoords, indices, _primitivetype)
-	{
+	this.reset = function(positions, normals, tangents, binormals, texcoords, indices, _primitivetype) {
 		primitivetype = _primitivetype;
 		numvertices = Math.floor(positions.length / 3);
 		numindices = 0;
 
 		if(!posbuffer)
 			posbuffer = gl.createBuffer();
+
 		gl.bindBuffer(gl.ARRAY_BUFFER, posbuffer);
 		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+
 		if(normals)
 		{
 			if(!nmlbuffer)
@@ -230,6 +217,7 @@ function Mesh(_gl, positions, normals, tangents, binormals, texcoords, indices, 
 		}
 		else if(!nmlbuffer)
 			gl.deleteBuffer(nmlbuffer);
+
 		if(tangents)
 		{
 			if(!tgtbuffer)
@@ -239,6 +227,7 @@ function Mesh(_gl, positions, normals, tangents, binormals, texcoords, indices, 
 		}
 		else if(!tgtbuffer)
 			gl.deleteBuffer(tgtbuffer);
+
 		if(binormals)
 		{
 			if(!bnmbuffer)
@@ -248,6 +237,7 @@ function Mesh(_gl, positions, normals, tangents, binormals, texcoords, indices, 
 		}
 		else if(!bnmbuffer)
 			gl.deleteBuffer(bnmbuffer);
+
 		if(texcoords)
 		{
 			if(!texcoordbuffer)
@@ -257,6 +247,7 @@ function Mesh(_gl, positions, normals, tangents, binormals, texcoords, indices, 
 		}
 		else if(!texcoordbuffer)
 			gl.deleteBuffer(texcoordbuffer);
+
 		if(indices)
 		{
 			if(!idxbuffer)
@@ -275,11 +266,11 @@ function Mesh(_gl, positions, normals, tangents, binormals, texcoords, indices, 
 				primitivetype = gl.TRIANGLE_STRIP; // Default primitive type for non-indexed geometry is TRIANGLE_STRIP
 		}
 	}
+
 	if(positions) // Mesh vertex positions array can't be null
 		this.reset(positions, normals, tangents, binormals, texcoords, indices, _primitivetype);
 
-	this.bind = function(sdr, texture)
-	{
+	this.bind = function(sdr, texture) {
 		if(!posbuffer) // Mesh without vertex positions can't be rendered
 			return;
 
@@ -343,8 +334,7 @@ function Mesh(_gl, positions, normals, tangents, binormals, texcoords, indices, 
 			gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, idxbuffer);
 	}
 
-	this.draw = function()
-	{
+	this.draw = function() {
 		if(!posbuffer) // Mesh without vertex positions can't be rendered
 			return;
 
@@ -354,8 +344,7 @@ function Mesh(_gl, positions, normals, tangents, binormals, texcoords, indices, 
 			gl.drawArrays(primitivetype, 0, numvertices);
 	}
 
-	this.free = function()
-	{
+	this.free = function() {
 		if(posbuffer)
 		{
 			gl.deleteBuffer(posbuffer);
@@ -388,8 +377,8 @@ function Mesh(_gl, positions, normals, tangents, binormals, texcoords, indices, 
 		}
 	}
 }
-function CreateQuadMesh(gl)
-{
+
+function CreateQuadMesh(gl) {
 	// Create a 2D quad mesh
 	var positions = [
 		0.0, 1.0, 0.0,
@@ -405,8 +394,8 @@ function CreateQuadMesh(gl)
 	];
 	return new Mesh(gl, positions, null, null, null, texcoords);
 }
-function CreateLineQuadMesh(gl)
-{
+
+function CreateLineQuadMesh(gl) {
 	// Create a 2D quad mesh
 	var positions = [
 		0.0, 0.0, 0.0,
@@ -416,8 +405,8 @@ function CreateLineQuadMesh(gl)
 	];
 	return new Mesh(gl, positions, null, null, null, null, null, gl.LINE_LOOP);
 }
-function CreateGridMesh(gl)
-{
+
+function CreateGridMesh(gl) {
 	// Create a 2D quad mesh
 	var positions = [];
 	for(var y = 0; y <= 10; ++y)
@@ -427,8 +416,7 @@ function CreateGridMesh(gl)
 	return new Mesh(gl, positions, null, null, null, null, null, gl.LINES);
 }
 
-function webGLStart(canvas)
-{
+function webGLStart(canvas) {
 	var gl = WebGLUtils.setupWebGL(canvas);
 	if(!gl)
 		return;
@@ -441,8 +429,7 @@ function webGLStart(canvas)
 	return gl;
 }
 
-/*function setColorMap(gl, sdr, sections, getSectionTexture)
-{
+/*function setColorMap(gl, sdr, sections, getSectionTexture) {
 	if(sections == null || sections.length == 0)
 		return;
 	
@@ -478,9 +465,8 @@ function webGLStart(canvas)
 	gl.uniform1fv(gl.getUniformLocation(sdr, "colorMapStartAlpha"), sectionStartAlphaArray);
 	gl.uniform1fv(gl.getUniformLocation(sdr, "colorMapEndAlpha"), sectionEndAlphaArray);
 }*/
-var MAX_NUM_SECTIONS = 15;
-function setColorMap(gl, sdr, sections, getSectionTexture)
-{
+
+function setColorMap(gl, sdr, sections, getSectionTexture) {
 	if(sections == null || sections.length == 0)
 		return;
 	

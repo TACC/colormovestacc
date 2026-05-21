@@ -28,8 +28,6 @@
     <script type="text/javascript" src="js/ColorMapPicker.js"></script>
     <script type="text/javascript" src="js/ActionManager.js"></script>
     <script type="text/javascript" src="js/ColorMapCreator.js"></script>
-    <script type="text/javascript" src="js/Graphics.js"></script>
-    <script type="text/javascript" src="js/Input.js"></script>
     <!-- Shaders Refactored -->
     <script type="module">
       import { vsSimple } from './shaders/vsSimple.js';
@@ -48,7 +46,18 @@
       //gl.shaderSource(fragmentShader, fsHighlight);
       //gl.shaderSource(fragmentShader, fsColorMapping);
       //gl.shaderSource(fragmentShader, fsColorMap);
+
+      // global scope.
+      window.shaderSource(vertexShader, vsSimple);
+      window.shaderSource(vertexShader, vsAlpha);
+      window.shaderSource(fragmentShader, fsSimple);
+      window.shaderSource(fragmentShader, fsLine);
+      window.shaderSource(fragmentShader, fsHighlight);
+      window.shaderSource(fragmentShader, fsColorMapping);
+      window.shaderSource(fragmentShader, fsColorMap);
     </script>
+    <script type="text/javascript" src="js/Graphics.js"></script>
+    <script type="text/javascript" src="js/Input.js"></script>
 
     <!-- >>> Shaders -->
 
