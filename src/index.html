@@ -15,7 +15,6 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script type="text/javascript" src="lib/gl-matrix.min.js"></script>
     <script type="text/javascript" src="lib/webgl-utils.js"></script>
-    <!--<script type="text/javascript" src="lib/fits/fits.js"></script>-->
     <script type="text/javascript" src="lib/fits.js"></script>
     <script type="text/javascript" src="lib/jszip.min.js"></script>
     <!-- Custom Packages -->
@@ -31,9 +30,16 @@
     <script type="text/javascript" src="js/ColorMapCreator.js"></script>
     <script type="text/javascript" src="js/Graphics.js"></script>
     <script type="text/javascript" src="js/Input.js"></script>
+    <!-- Shaders Refactored -->
+    <script type="module">
+      import { vsSimple } from './shaders/vsSimple.js';
+
+      // wherever you passed the shader source, e.g.:
+      gl.shaderSource(vertexShader, vsSimple);
+    </script>
     <!-- >>> Shaders -->
-    <script id="vsSimple" type="x-shader/x-vertex">
-        attribute vec3 vpos;
+    <!--<script id="vsSimple" type="x-shader/x-vertex">
+      attribute vec3 vpos;
       attribute vec2 vtexcoord;
       uniform mat4 matWorldViewProj;
       varying vec2 uv;
@@ -43,7 +49,7 @@
       	gl_Position = matWorldViewProj * vec4(vpos, 1.0);
       	uv = vtexcoord;
       }
-    </script>
+    </script>-->
     <script id="vsAlpha" type="x-shader/x-vertex">
         precision mediump float;
       precision mediump int;
