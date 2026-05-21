@@ -30,7 +30,6 @@
             src="img/saveImageButton.png"
             onclick="saveImages()"
           />
-          <!--<input class="button" type="image" id="saveImageButton" src="img/saveImageButton.png" onclick="imageCanvas.save();"/>-->
           <input
             class="button"
             title="Zoom to Fit"
@@ -59,12 +58,10 @@
             id="cmdSplitter"
             src="img/splitterButton.png"
             onclick="
-              /*hideColorPicker();*/ var canvas =
-                document.getElementById('cvColorMap');
-              canvas.style.cursor =
-                canvas.style.cursor.indexOf('splitterCursor') != -1
-                  ? CURSOR_DEFAULT
-                  : 'url(img/splitterCursor.png), auto';
+              var canvas = document.getElementById('cvColorMap');
+              canvas.style.cursor = canvas.style.cursor.indexOf('splitterCursor') != -1
+                ? CURSOR_DEFAULT
+                : 'url(img/splitterCursor.png), auto';
             "
           />
           <input
@@ -81,12 +78,10 @@
             id="cmdInterjector"
             src="img/interjectorButton.png"
             onclick="
-              /*hideColorPicker();*/ var canvas =
-                document.getElementById('cvColorMap');
-              canvas.style.cursor =
-                canvas.style.cursor.indexOf('interjectorCursor') != -1
-                  ? CURSOR_DEFAULT
-                  : 'url(img/interjectorCursor.png) 9 0, auto';
+              var canvas = document.getElementById('cvColorMap');
+              canvas.style.cursor = canvas.style.cursor.indexOf('interjectorCursor') != -1
+                ? CURSOR_DEFAULT
+                : 'url(img/interjectorCursor.png) 9 0, auto';
             "
           />
           <div class="button" id="divUndoRedo">
