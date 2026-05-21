@@ -37,13 +37,17 @@
       import { fsSimple } from './shaders/fsSimple.js';
       import { fsLine } from './shaders/fsLine.js';
       import { fsHighlight } from './shaders/fsHighlight.js';
+      import { fsColorMapping } from './shaders/fsColorMapping.js';
+      import { fsColorMap } from './shaders/fsColorMap.js';
 
       // wherever you passed the shader source, e.g.:
-      gl.shaderSource(vertexShader, vsSimple);
-      gl.shaderSource(vertexShader, vsAlpha);
-      gl.shaderSource(fragmentShader, fsSimple);
-      gl.shaderSource(fragmentShader, fsLine);
-      gl.shaderSource(fragmentShader, fsHighlight);
+      //gl.shaderSource(vertexShader, vsSimple);
+      //gl.shaderSource(vertexShader, vsAlpha);
+      //gl.shaderSource(fragmentShader, fsSimple);
+      //gl.shaderSource(fragmentShader, fsLine);
+      //gl.shaderSource(fragmentShader, fsHighlight);
+      //gl.shaderSource(fragmentShader, fsColorMapping);
+      //gl.shaderSource(fragmentShader, fsColorMap);
     </script>
 
     <!-- >>> Shaders -->
@@ -127,7 +131,7 @@
       }
     </script>-->
 
-    <script id="fsColorMapping" type="x-shader/x-fragment">
+    <!--<script id="fsColorMapping" type="x-shader/x-fragment">
         precision mediump float;
       	precision mediump int;
       	uniform float colorMapStart[15], colorMapEnd[15];
@@ -334,9 +338,9 @@
       			gl_FragColor = vec4(texture2D(colorMap[14], vec2(v, 0.5)).rgb + vec3(-h, h, -h), a + h);
       		}
       	}
-    </script>
+    </script>-->
 
-    <script id="fsColorMap" type="x-shader/x-fragment">
+    <!--<script id="fsColorMap" type="x-shader/x-fragment">
         precision mediump float;
       varying vec2 uv;
       uniform sampler2D colorMap[15];
@@ -463,8 +467,8 @@
       		gl_FragColor = vec4(texture2D(colorMap[14], vec2(v, 0.5)).rgb, 1.0);
       	}
       }
-    </script>
-
+    </script>-->
+    <script src="js/client.js" defer></script>
   </head>
 
   <body onload="onLoad()" onresize="onResize()">
@@ -719,7 +723,7 @@
 
     <a id="aDownload" download="image.png"></a>
 
-    <script>
+    <!--<script>
       var downloadColormapDialog = $("#downloadColormapDialog").dialog({
         autoOpen: false,
         modal: true,
@@ -1036,35 +1040,35 @@
         image.src = "DEBUG.png";*/
 
         /*var image = new Image();
-	image.src = 'debug_bg.png';
-	image.onload = function() {
-	imageCanvas.loadImage('debug_bg.png', image, null, false, false);
+        image.src = 'debug_bg.png';
+        image.onload = function() {
+          imageCanvas.loadImage('debug_bg.png', image, null, false, false);
 
-	image = new Image();
-	image.src = 'debug_layer3.png';
-	image.onload = function() {
-		imageCanvas.loadImage('debug_layer3.png', image, null, true, true);
+          image = new Image();
+          image.src = 'debug_layer3.png';
+          image.onload = function() {
+            imageCanvas.loadImage('debug_layer3.png', image, null, true, true);
 
-		image = new Image();
-		image.src = 'debug_layer2.png';
-		image.onload = function() {
-			imageCanvas.loadImage('debug_layer2.png', image, null, true, true);
+            image = new Image();
+            image.src = 'debug_layer2.png';
+            image.onload = function() {
+              imageCanvas.loadImage('debug_layer2.png', image, null, true, true);
 
-			image = new Image();
-			image.src = 'debug_layer1.png';
-			image.onload = function() {
-				imageCanvas.loadImage('debug_layer1.png', image, null, true, true);
+              image = new Image();
+              image.src = 'debug_layer1.png';
+              image.onload = function() {
+                imageCanvas.loadImage('debug_layer1.png', image, null, true, true);
 
-				image = new Image();
-				image.src = 'debug_layer0.png';
-				image.onload = function() {
-					imageCanvas.loadImage('debug_layer0.png', image, null, true, true);
-					setHistogramResolution();
-				};
-			};
-		};
-	};
-};*/
+                image = new Image();
+                image.src = 'debug_layer0.png';
+                image.onload = function() {
+                  imageCanvas.loadImage('debug_layer0.png', image, null, true, true);
+                  setHistogramResolution();
+                };
+              };
+            };
+          };
+        };*/
 
         showColorPicker();
       }
@@ -1248,10 +1252,10 @@
       }
 
       /*function getHistogramResolution()
-    {
-    	var rangeHistogramResolution = document.getElementById('rangeHistogramResolution');
-    	return Math.pow(2, rangeHistogramResolution.value);
-    }*/
+      {
+        var rangeHistogramResolution = document.getElementById('rangeHistogramResolution');
+        return Math.pow(2, rangeHistogramResolution.value);
+      }*/
       function setHistogramResolution() {
         var rangeHistogramResolution = document.getElementById(
           "rangeHistogramResolution",
@@ -1668,6 +1672,6 @@
 
       var ofd = document.getElementById("ofd");
       if (ofd !== null) ofd.addEventListener("change", handleFileSelect, false);
-    </script>
+    </script>-->
   </body>
 </html>
