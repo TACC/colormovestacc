@@ -1,4 +1,4 @@
-version: '3.8'
+name: colormoves
 services:
   colormoves:
     build:
@@ -7,6 +7,7 @@ services:
     image: taccwma/colormovestacc:latest
     volumes:
       - .:/colormoves
+      - /colormoves/src/node_modules   # ← anonymous volume protects node_modules
     ports:
       - 8888:8888
     stdin_open: true

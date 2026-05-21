@@ -1,5 +1,13 @@
+#!make
+
+#############################
 ### ENV VARS ###########
-DOCKERHUB_REPO := $(shell cat ./docker_repo.var)
+
+# ENV_FILE ?= ./.env
+# include $(ENV_FILE)
+
+# DOCKERHUB_REPO := $(shell cat ./docker_repo.var)
+DOCKERHUB_REPO := taccwma/colormovestacc
 DOCKER_TAG ?= $(shell git rev-parse --short HEAD)
 DOCKER_IMAGE := $(DOCKERHUB_REPO):$(DOCKER_TAG)
 DOCKER_IMAGE_LATEST := $(DOCKERHUB_REPO):latest
@@ -7,12 +15,15 @@ DOCKER_IMAGE_LATEST := $(DOCKERHUB_REPO):latest
 # if it exists, else it is the branch on which the commit exists
 DOCKER_IMAGE_BRANCH := $(DOCKERHUB_REPO):$(shell git describe --exact-match --tags 2> /dev/null || git symbolic-ref --short HEAD)
 
+ifndef COMPOSE_COMMAND
+override COMPOSE_COMMAND := docker compose
+endif
 
 ### BUILD  ###########
 # Build the colormoves app image from source using docker compose.
 .PHONY: build
-build: build-image
-	docker-compose -f docker-compose.yml build
+build:
+	${COMPOSE_COMMAND} -f docker-compose.yml build
 
 # Build the colormoves app image from source using docker engine.
 .PHONY: build-image
@@ -42,6 +53,17 @@ info-make:
 	@echo $(DOCKER_IMAGE_BRANCH)
 
 
+#############################
+### UTILS  ###########
+
+# Open a browser window for the application.
+.PHONY: open-browser
+open-browser:
+# 	open http://0.0.0.0:8888 &
+	open http://localhost:8888 &
+
+
+#############################
 ### PUBLISH  ###########
 # Publish the current image tag to docker hub.
 .PHONY: publish
@@ -63,7 +85,7 @@ tag-image:
 # Start the app (used in automated deployments).
 .PHONY: start
 start:
-	docker-compose -f docker-compose.yml up
+	${COMPOSE_COMMAND} -f docker-compose.yml up &
 
 # Start the app using a published image and open a browser.
 .PHONY: start-app
@@ -85,7 +107,7 @@ start-image:
 # Start the app (used in automated deployments).
 .PHONY: stop
 stop:
-	docker-compose -f docker-compose.yml down
+	${COMPOSE_COMMAND} -f docker-compose.yml down
 
 # Stop the app running a published image.
 .PHONY: stop-app

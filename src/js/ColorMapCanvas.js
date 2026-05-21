@@ -28,11 +28,11 @@ function ColorMapCanvas(canvas, div, divBounds)
 	var sdrLine = initShader(gl, "vsSimple", "fsLine");
 	var sdrAlphaLine = initShader(gl, "vsAlpha", "fsLine");
 	var sdrHighlight = initShader(gl, "vsSimple", "fsHighlight");
-	var texSplitter = LoadTexture(gl, "splitter.png");
-	var texInterjectorLeft = LoadTexture(gl, "interjectorLeft.png");
-	var texInterjectorRight = LoadTexture(gl, "interjectorRight.png");
-	var texDragPoint = LoadTexture(gl, "dragPoint.png", function() {requestAnimFrame(render);});
-	var texDragPointHighlighted = LoadTexture(gl, "dragPoint_h.png");
+	var texSplitter = LoadTexture(gl, "../img/splitter.png");
+	var texInterjectorLeft = LoadTexture(gl, "../img/interjectorLeft.png");
+	var texInterjectorRight = LoadTexture(gl, "../img/interjectorRight.png");
+	var texDragPoint = LoadTexture(gl, "../img/dragPoint.png", function() {requestAnimFrame(render);});
+	var texDragPointHighlighted = LoadTexture(gl, "../img/dragPoint_h.png");
 	var meshQuad = CreateQuadMesh(gl);
 	var meshLineQuad = CreateLineQuadMesh(gl);
 	var meshGrid = CreateGridMesh(gl);

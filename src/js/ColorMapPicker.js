@@ -42,7 +42,7 @@ function ColorMapPicker()
 			var button = document.createElement('input');
 			button.id = "tableColorMapPicker_button";
 			button.type = "image";
-			button.src = "flipButton.png"
+			button.src = "../img/flipButton.png"
 			button.tag_canvas = canvas;
 			button.tag_colorMap = colorMap;
 			button.onclick = colorMap_onFlipClick;
@@ -155,12 +155,12 @@ function ColorMapPicker()
 		cell = tbody.rows[rowSolidIndex].insertCell(-1);
 		var addclrimg = document.createElement('img');
 		addclrimg.id = "tableColorMapPicker_addclrimg";
-		addclrimg.src = "addColorButton.png"
+		addclrimg.src = "../img/addColorButton.png"
 		cell.appendChild(addclrimg);
 		var addclr = document.createElement('input');
 		addclr.id = "tableColorMapPicker_addclr";
 		addclr.type = "color";
-		addclr.src = "addColorButton.png"
+		addclr.src = "../img/addColorButton.png"
 		addclr.title = "Add Custom Color"
     var hex = function(v) { var str = v.toString(16); return ('00'+str).substring(str.length); };
 		addclr.onclick = function() {
@@ -273,7 +273,7 @@ function ColorMapPicker()
 				var button = document.createElement('input');
 				button.id = "tableColorMapPicker_button";
 				button.type = "image";
-				button.src = "flipButton.png"
+				button.src = "../img/flipButton.png"
 				button.tag_canvas = canvas;
 				button.tag_colorMap = colorMap;
 				button.onclick = colorMap_onFlipClick;
@@ -386,7 +386,7 @@ function ColorMapPicker()
 				var button = document.createElement('input');
 				button.id = "tableColorMapPicker_button";
 				button.type = "image";
-				button.src = "flipButton.png"
+				button.src = "../img/flipButton.png"
 				button.tag_canvas = canvas;
 				button.tag_colorMap = colorMap;
 				button.onclick = colorMap_onFlipClick;
